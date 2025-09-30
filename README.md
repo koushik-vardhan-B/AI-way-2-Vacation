@@ -468,8 +468,7 @@ RATE_LIMIT_PER_MINUTE=30
 - **OpenWeatherMap**: For weather data
 - **Google Places**: For location information
 - **Groq**: For fast AI inference
-- **All Contributors**: Thanks to everyone who helped build this!
 
 ---
 
-*Built with ❤️ for travelers worldwide*
+*Built as my collage mini project*
