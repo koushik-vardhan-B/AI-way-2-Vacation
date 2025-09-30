@@ -1,0 +1,156 @@
+2025-09-22 06:12:32 - root - INFO - Logging system initialized
+2025-09-22 14:18:22 - root - INFO - Logging system initialized
+2025-09-22 14:18:22 - main - INFO - 🚀 Starting AI Travel Planner API...
+2025-09-22 14:18:22 - api.dependencies - INFO - Creating GraphBuilder with provider: groq
+2025-09-22 14:18:23 - googlemaps.client - INFO - API queries_quota: 60
+2025-09-22 14:18:23 - main - INFO - ✅ AI Agent initialized successfully
+2025-09-22 14:18:23 - main - INFO - ✅ API started successfully on 0.0.0.0:8000
+2025-09-22 14:21:46 - fastapi - WARNING - email-validator not installed, email fields will be treated as str.
+To install, run: pip install email-validator
+2025-09-22 14:39:51 - googlemaps.client - INFO - API queries_quota: 60
+2025-09-22 14:41:08 - googlemaps.client - INFO - API queries_quota: 60
+2025-09-22 14:43:11 - main - INFO - 🔄 Shutting down AI Travel Planner API...
+2025-09-22 14:43:24 - root - INFO - Logging system initialized
+2025-09-22 14:43:24 - main - INFO - 🚀 Starting AI Travel Planner API...
+2025-09-22 14:43:24 - api.dependencies - INFO - Creating GraphBuilder with provider: groq
+2025-09-22 14:43:25 - googlemaps.client - INFO - API queries_quota: 60
+2025-09-22 14:43:25 - main - INFO - ✅ AI Agent initialized successfully
+2025-09-22 14:43:25 - main - INFO - ✅ API started successfully on 0.0.0.0:8000
+2025-09-22 14:43:27 - root - INFO - Logging system initialized
+2025-09-22 14:43:27 - main - INFO - 🚀 Starting AI Travel Planner API...
+2025-09-22 14:43:27 - api.dependencies - INFO - Creating GraphBuilder with provider: groq
+2025-09-22 14:43:28 - googlemaps.client - INFO - API queries_quota: 60
+2025-09-22 14:43:28 - main - INFO - ✅ AI Agent initialized successfully
+2025-09-22 14:43:28 - main - INFO - ✅ API started successfully on 0.0.0.0:8000
+2025-09-22 14:43:36 - googlemaps.client - INFO - API queries_quota: 60
+2025-09-22 14:46:19 - main - INFO - 🔄 Shutting down AI Travel Planner API...
+2025-09-22 14:46:23 - root - INFO - Logging system initialized
+2025-09-22 14:46:23 - main - INFO - 🚀 Starting AI Travel Planner API...
+2025-09-22 14:46:23 - api.dependencies - INFO - Creating GraphBuilder with provider: groq
+2025-09-22 14:46:24 - googlemaps.client - INFO - API queries_quota: 60
+2025-09-22 14:46:24 - main - INFO - ✅ AI Agent initialized successfully
+2025-09-22 14:46:24 - main - INFO - ✅ API started successfully on 0.0.0.0:8000
+2025-09-22 14:46:26 - root - INFO - Logging system initialized
+2025-09-22 14:46:26 - main - INFO - 🚀 Starting AI Travel Planner API...
+2025-09-22 14:46:26 - api.dependencies - INFO - Creating GraphBuilder with provider: groq
+2025-09-22 14:46:26 - googlemaps.client - INFO - API queries_quota: 60
+2025-09-22 14:46:26 - main - INFO - ✅ AI Agent initialized successfully
+2025-09-22 14:46:26 - main - INFO - ✅ API started successfully on 0.0.0.0:8000
+2025-09-22 14:49:22 - googlemaps.client - INFO - API queries_quota: 60
+2025-09-22 15:12:15 - googlemaps.client - INFO - API queries_quota: 60
+2025-09-22 15:18:44 - main - INFO - 🔄 Shutting down AI Travel Planner API...
+2025-09-27 21:19:19 - root - INFO - Logging system initialized
+2025-09-27 21:19:19 - main - INFO - 🚀 Starting AI Travel Planner API...
+2025-09-27 21:19:19 - api.dependencies - INFO - Creating GraphBuilder with provider: groq
+2025-09-27 21:19:20 - googlemaps.client - INFO - API queries_quota: 60
+2025-09-27 21:19:21 - main - INFO - ✅ AI Agent initialized successfully
+2025-09-27 21:19:21 - main - INFO - ✅ API started successfully on 0.0.0.0:8000
+2025-09-27 21:20:19 - fastapi - WARNING - email-validator not installed, email fields will be treated as str.
+To install, run: pip install email-validator
+2025-09-27 21:25:07 - api.routes - WARNING - Failed to get rate for EUR: ('Connection aborted.', ConnectionResetError(104, 'Connection reset by peer'))
+2025-09-27 21:28:55 - root - INFO - Logging system initialized
+2025-09-27 21:28:57 - api.dependencies - INFO - Creating GraphBuilder with provider: groq
+2025-09-27 21:29:00 - googlemaps.client - INFO - API queries_quota: 60
+2025-09-27 21:29:00 - main - INFO - 📝 Processing travel query: Plan a 3-day trip to London...
+2025-09-27 21:29:01 - main - ERROR - ❌ Error processing query: Error code: 401 - {'error': {'message': 'Invalid API Key', 'type': 'invalid_request_error', 'code': 'invalid_api_key'}}
+2025-09-27 21:29:01 - main - INFO - 🔧 Generated detailed query: Plan a 5-day trip to Paris, France with a budget of $2000 focusing on cultural, food activities for 2 people
+2025-09-27 21:29:01 - main - INFO - 📝 Processing travel query: Plan a 5-day trip to Paris, France with a budget of $2000 focusing on cultural, food activities for ...
+2025-09-27 21:29:02 - main - ERROR - ❌ Error processing query: Error code: 401 - {'error': {'message': 'Invalid API Key', 'type': 'invalid_request_error', 'code': 'invalid_api_key'}}
+2025-09-27 21:29:02 - main - ERROR - ❌ Error in detailed trip planning: 500: Failed to generate travel plan: Error code: 401 - {'error': {'message': 'Invalid API Key', 'type': 'invalid_request_error', 'code': 'invalid_api_key'}}
+2025-09-27 21:29:02 - api.dependencies - INFO - Creating GraphBuilder with provider: groq
+2025-09-27 21:29:02 - googlemaps.client - INFO - API queries_quota: 60
+2025-09-27 21:29:02 - googlemaps.client - INFO - API queries_quota: 60
+2025-09-27 21:29:03 - fastapi - WARNING - email-validator not installed, email fields will be treated as str.
+To install, run: pip install email-validator
+2025-09-27 21:32:44 - main - INFO - 🔄 Shutting down AI Travel Planner API...
+2025-09-27 21:32:52 - root - INFO - Logging system initialized
+2025-09-27 21:32:52 - main - INFO - 🚀 Starting AI Travel Planner API...
+2025-09-27 21:32:52 - api.dependencies - INFO - Creating GraphBuilder with provider: groq
+2025-09-27 21:32:52 - googlemaps.client - INFO - API queries_quota: 60
+2025-09-27 21:32:52 - main - INFO - ✅ AI Agent initialized successfully
+2025-09-27 21:32:52 - main - INFO - ✅ API started successfully on 0.0.0.0:8000
+2025-09-27 21:32:56 - root - INFO - Logging system initialized
+2025-09-27 21:32:56 - main - INFO - 🚀 Starting AI Travel Planner API...
+2025-09-27 21:32:56 - api.dependencies - INFO - Creating GraphBuilder with provider: groq
+2025-09-27 21:32:56 - googlemaps.client - INFO - API queries_quota: 60
+2025-09-27 21:32:57 - main - INFO - ✅ AI Agent initialized successfully
+2025-09-27 21:32:57 - main - INFO - ✅ API started successfully on 0.0.0.0:8000
+2025-09-27 21:33:17 - main - INFO - 🔄 Shutting down AI Travel Planner API...
+2025-09-27 21:33:22 - root - INFO - Logging system initialized
+2025-09-27 21:33:22 - main - INFO - 🚀 Starting AI Travel Planner API...
+2025-09-27 21:33:22 - api.dependencies - INFO - Creating GraphBuilder with provider: groq
+2025-09-27 21:33:23 - googlemaps.client - INFO - API queries_quota: 60
+2025-09-27 21:33:23 - main - INFO - ✅ AI Agent initialized successfully
+2025-09-27 21:33:23 - main - INFO - ✅ API started successfully on 0.0.0.0:8000
+2025-09-27 21:34:02 - main - INFO - 🔄 Shutting down AI Travel Planner API...
+2025-09-27 21:42:34 - root - INFO - Logging system initialized
+2025-09-27 21:42:34 - api.dependencies - INFO - Creating GraphBuilder with provider: groq
+2025-09-27 21:42:35 - googlemaps.client - INFO - API queries_quota: 60
+2025-09-27 21:42:35 - main - INFO - 📝 Processing travel query: Plan a 3-day trip to London...
+2025-09-27 21:42:46 - main - ERROR - ❌ Error processing query: Error code: 401 - {'error': {'message': 'Invalid API Key', 'type': 'invalid_request_error', 'code': 'invalid_api_key'}}
+2025-09-27 21:42:46 - main - INFO - 🔧 Generated detailed query: Plan a 5-day trip to Paris, France with a budget of $2000 focusing on cultural, food activities for 2 people
+2025-09-27 21:42:46 - main - INFO - 📝 Processing travel query: Plan a 5-day trip to Paris, France with a budget of $2000 focusing on cultural, food activities for ...
+2025-09-27 21:42:46 - main - ERROR - ❌ Error processing query: Error code: 401 - {'error': {'message': 'Invalid API Key', 'type': 'invalid_request_error', 'code': 'invalid_api_key'}}
+2025-09-27 21:42:46 - main - ERROR - ❌ Error in detailed trip planning: 500: Failed to generate travel plan: Error code: 401 - {'error': {'message': 'Invalid API Key', 'type': 'invalid_request_error', 'code': 'invalid_api_key'}}
+2025-09-27 21:42:47 - api.dependencies - INFO - Creating GraphBuilder with provider: groq
+2025-09-27 21:42:47 - googlemaps.client - INFO - API queries_quota: 60
+2025-09-27 21:42:47 - googlemaps.client - INFO - API queries_quota: 60
+2025-09-27 21:42:47 - fastapi - WARNING - email-validator not installed, email fields will be treated as str.
+To install, run: pip install email-validator
+2025-09-27 21:47:13 - root - INFO - Logging system initialized
+2025-09-27 21:47:15 - api.dependencies - INFO - Creating GraphBuilder with provider: groq
+2025-09-27 21:47:15 - api.dependencies - ERROR - Failed to create GraphBuilder: Could not import googlemaps python package. Please, install places dependency group: `pip install langchain-google-community[places]`
+2025-09-27 21:47:15 - api.dependencies - INFO - Creating GraphBuilder with provider: groq
+2025-09-27 21:47:15 - api.dependencies - ERROR - Failed to create GraphBuilder: Could not import googlemaps python package. Please, install places dependency group: `pip install langchain-google-community[places]`
+2025-09-27 21:47:16 - api.dependencies - INFO - Creating GraphBuilder with provider: groq
+2025-09-27 21:47:16 - api.dependencies - ERROR - Failed to create GraphBuilder: Could not import googlemaps python package. Please, install places dependency group: `pip install langchain-google-community[places]`
+2025-09-27 21:47:16 - api.dependencies - INFO - Creating GraphBuilder with provider: groq
+2025-09-27 21:47:16 - api.dependencies - ERROR - Failed to create GraphBuilder: Could not import googlemaps python package. Please, install places dependency group: `pip install langchain-google-community[places]`
+2025-09-27 21:47:16 - api.dependencies - INFO - Creating GraphBuilder with provider: groq
+2025-09-27 21:47:16 - api.dependencies - ERROR - Failed to create GraphBuilder: Could not import googlemaps python package. Please, install places dependency group: `pip install langchain-google-community[places]`
+2025-09-27 21:47:16 - api.dependencies - INFO - Creating GraphBuilder with provider: groq
+2025-09-27 21:47:16 - api.dependencies - ERROR - Failed to create GraphBuilder: Could not import googlemaps python package. Please, install places dependency group: `pip install langchain-google-community[places]`
+2025-09-27 21:47:17 - fastapi - WARNING - email-validator not installed, email fields will be treated as str.
+To install, run: pip install email-validator
+2025-09-27 21:47:59 - root - INFO - Logging system initialized
+2025-09-27 21:48:00 - api.dependencies - INFO - Creating GraphBuilder with provider: groq
+2025-09-27 21:48:00 - googlemaps.client - INFO - API queries_quota: 60
+2025-09-27 21:48:00 - main - INFO - 📝 Processing travel query: Plan a 3-day trip to London...
+2025-09-27 21:48:02 - main - ERROR - ❌ Error processing query: Error code: 401 - {'error': {'message': 'Invalid API Key', 'type': 'invalid_request_error', 'code': 'invalid_api_key'}}
+2025-09-27 21:48:02 - main - INFO - 🔧 Generated detailed query: Plan a 5-day trip to Paris, France with a budget of $2000 focusing on cultural, food activities for 2 people
+2025-09-27 21:48:02 - main - INFO - 📝 Processing travel query: Plan a 5-day trip to Paris, France with a budget of $2000 focusing on cultural, food activities for ...
+2025-09-27 21:48:04 - main - ERROR - ❌ Error processing query: Error code: 401 - {'error': {'message': 'Invalid API Key', 'type': 'invalid_request_error', 'code': 'invalid_api_key'}}
+2025-09-27 21:48:04 - main - ERROR - ❌ Error in detailed trip planning: 500: Failed to generate travel plan: Error code: 401 - {'error': {'message': 'Invalid API Key', 'type': 'invalid_request_error', 'code': 'invalid_api_key'}}
+2025-09-27 21:48:04 - api.dependencies - INFO - Creating GraphBuilder with provider: groq
+2025-09-27 21:48:04 - googlemaps.client - INFO - API queries_quota: 60
+2025-09-27 21:48:04 - googlemaps.client - INFO - API queries_quota: 60
+2025-09-27 21:48:05 - fastapi - WARNING - email-validator not installed, email fields will be treated as str.
+To install, run: pip install email-validator
+2025-09-27 21:49:36 - root - INFO - Logging system initialized
+2025-09-27 21:49:36 - api.dependencies - INFO - Creating GraphBuilder with provider: groq
+2025-09-27 21:49:37 - googlemaps.client - INFO - API queries_quota: 60
+2025-09-27 21:49:37 - main - INFO - 📝 Processing travel query: Plan a 3-day trip to London...
+2025-09-27 21:49:38 - main - ERROR - ❌ Error processing query: Error code: 401 - {'error': {'message': 'Invalid API Key', 'type': 'invalid_request_error', 'code': 'invalid_api_key'}}
+2025-09-27 21:49:38 - main - INFO - 🔧 Generated detailed query: Plan a 5-day trip to Paris, France with a budget of $2000 focusing on cultural, food activities for 2 people
+2025-09-27 21:49:38 - main - INFO - 📝 Processing travel query: Plan a 5-day trip to Paris, France with a budget of $2000 focusing on cultural, food activities for ...
+2025-09-27 21:49:39 - main - ERROR - ❌ Error processing query: Error code: 401 - {'error': {'message': 'Invalid API Key', 'type': 'invalid_request_error', 'code': 'invalid_api_key'}}
+2025-09-27 21:49:39 - main - ERROR - ❌ Error in detailed trip planning: 500: Failed to generate travel plan: Error code: 401 - {'error': {'message': 'Invalid API Key', 'type': 'invalid_request_error', 'code': 'invalid_api_key'}}
+2025-09-27 21:49:39 - api.dependencies - INFO - Creating GraphBuilder with provider: groq
+2025-09-27 21:49:39 - googlemaps.client - INFO - API queries_quota: 60
+2025-09-27 21:49:40 - googlemaps.client - INFO - API queries_quota: 60
+2025-09-27 21:49:40 - fastapi - WARNING - email-validator not installed, email fields will be treated as str.
+To install, run: pip install email-validator
+2025-09-27 21:51:28 - root - INFO - Logging system initialized
+2025-09-27 21:51:29 - api.dependencies - INFO - Creating GraphBuilder with provider: groq
+2025-09-27 21:51:29 - googlemaps.client - INFO - API queries_quota: 60
+2025-09-27 21:51:29 - main - INFO - 📝 Processing travel query: Plan a 3-day trip to London...
+2025-09-27 21:51:31 - main - ERROR - ❌ Error processing query: Error code: 401 - {'error': {'message': 'Invalid API Key', 'type': 'invalid_request_error', 'code': 'invalid_api_key'}}
+2025-09-27 21:51:31 - main - INFO - 🔧 Generated detailed query: Plan a 5-day trip to Paris, France with a budget of $2000 focusing on cultural, food activities for 2 people
+2025-09-27 21:51:31 - main - INFO - 📝 Processing travel query: Plan a 5-day trip to Paris, France with a budget of $2000 focusing on cultural, food activities for ...
+2025-09-27 21:51:31 - main - ERROR - ❌ Error processing query: Error code: 401 - {'error': {'message': 'Invalid API Key', 'type': 'invalid_request_error', 'code': 'invalid_api_key'}}
+2025-09-27 21:51:31 - main - ERROR - ❌ Error in detailed trip planning: 500: Failed to generate travel plan: Error code: 401 - {'error': {'message': 'Invalid API Key', 'type': 'invalid_request_error', 'code': 'invalid_api_key'}}
+2025-09-27 21:51:31 - api.dependencies - INFO - Creating GraphBuilder with provider: groq
+2025-09-27 21:51:31 - googlemaps.client - INFO - API queries_quota: 60
+2025-09-27 21:51:32 - googlemaps.client - INFO - API queries_quota: 60
+2025-09-27 21:51:32 - fastapi - WARNING - email-validator not installed, email fields will be treated as str.
+To install, run: pip install email-validator

@@ -1,0 +1,14 @@
+[project]
+name = "ai-trip-planner"
+version = "0.1.0"
+description = "WAY2VACATION"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "pandas>=2.3.0",
+]
+
+[tool.uv.workspace]
+members = [
+    "AI_Travel_Planner",
+]
