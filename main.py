@@ -435,17 +435,22 @@ async def get_api_status():
 
 # Background tasks
 async def save_graph_visualization(react_app):
-    """Save the agent graph visualization"""
+    """Save the agent graph visualization only if not already saved for this session"""
     try:
-        png_graph = react_app.get_graph().draw_mermaid_png()
-        timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
+        # Use a session-based or daily filename to avoid saving repeatedly
+        timestamp = datetime.datetime.now().strftime("%Y%m%d")
         filename = f"graph_{timestamp}.png"
-        
-        os.makedirs(settings.GRAPHS_DIR, exist_ok=True)
-        with open(os.path.join(settings.GRAPHS_DIR, filename), "wb") as f:
-            f.write(png_graph)
-        
-        logger.info(f"📊 Graph saved as {filename}")
+        file_path = os.path.join(settings.GRAPHS_DIR, filename)
+
+        # Only save if file does not exist
+        if not os.path.exists(file_path):
+            png_graph = react_app.get_graph().draw_mermaid_png()
+            os.makedirs(settings.GRAPHS_DIR, exist_ok=True)
+            with open(file_path, "wb") as f:
+                f.write(png_graph)
+            logger.info(f"📊 Graph saved as {filename}")
+        else:
+            logger.info(f"📊 Graph already saved for today: {filename}")
     except Exception as e:
         logger.warning(f"⚠️ Could not save graph: {e}")
 

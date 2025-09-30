@@ -155,8 +155,8 @@ class TestCurrencyEndpoints:
         """Test currency conversion with real API"""
         request_data = {
             "amount": 100.0,
-            "from_currency": "USD",
-            "to_currency": "EUR"
+            "from_currency": "INR",
+            "to_currency": "USD"
         }
         response = client.post("/currency/convert", json=request_data, headers=auth_headers)
         
