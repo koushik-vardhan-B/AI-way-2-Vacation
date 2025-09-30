@@ -83,11 +83,6 @@ uvicorn main:app --reload --port 8000
 gunicorn main:app -w 4 -k uvicorn.workers.UvicornWorker --bind 0.0.0.0:8000
 ```
 
-#### Option C: Docker Compose
-```bash
-docker-compose up --build
-```
-
 ### 4. Access the API
 - **API Documentation**: http://localhost:8000/docs
 - **Alternative Docs**: http://localhost:8000/redoc
