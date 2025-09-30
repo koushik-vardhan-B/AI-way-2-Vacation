@@ -21,8 +21,6 @@ An intelligent travel planning API powered by AI agents that creates comprehensi
 - **FastAPI Framework**: High-performance async API with automatic documentation
 - **AI Agent Workflow**: LangGraph-powered multi-tool agent system
 - **Real-time Data**: Integration with multiple external APIs
-- **Docker Support**: Container-ready with Docker Compose configuration
-- **Comprehensive Logging**: Structured logging with rotation
 - **Rate Limiting**: Built-in request throttling
 - **Error Handling**: Graceful error management with detailed responses
 
