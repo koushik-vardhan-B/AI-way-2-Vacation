@@ -482,4 +482,72 @@ RATE_LIMIT_PER_MINUTE=30
 
 ---
 
+AI-TRAVEL-PLANNER/
+│
+├── 📁 agent/                          # AI Agent Core Logic
+│   ├── __init__.py
+│   └── agentic_workflow.py           # LangGraph-based agent workflow
+│
+├── 📁 api/                            # FastAPI REST API Layer
+│   ├── __init__.py
+│   ├── dependencies.py               # Dependency injection, rate limiting, auth
+│   ├── models.py                     # Pydantic request/response models
+│   ├── routes.py                     # Additional API routes (weather, currency, places)
+│   └── routes/
+│       └── places.py                 # Places-specific routes
+│
+├── 📁 core/                           # Core Configuration
+│   ├── __init__.py
+│   ├── config.py                     # Settings management (Pydantic BaseSettings)
+│   └── logging_config.py             # Logging setup and middleware
+│
+├── 📁 tools/                          # LangChain Tools (Agent Actions)
+│   ├── __init__.py
+│   ├── weather_info_tool.py          # Weather API tools
+│   ├── place_search_tool.py          # Google Places & Tavily search tools
+│   ├── currency_conversion_tool.py   # Currency conversion tools
+│   ├── expense_calculator_tool.py    # Cost calculation tools
+│   └── arthamatic_op_tool.py         # Basic arithmetic operations
+│
+├── 📁 utils/                          # Utility Functions
+│   ├── __init__.py
+│   ├── model_loader.py               # LLM loading (Groq/OpenAI)
+│   ├── weather_info.py               # Weather API wrapper
+│   ├── place_info_search.py          # Places search wrappers
+│   ├── currency_converter.py         # Currency conversion logic
+│   ├── expense_calculator.py         # Cost calculation logic
+│   ├── save_to_document.py           # Export travel plans to Markdown
+│   └── config_loader.py              # YAML config loader
+│
+├── 📁 prompt_library/                 # Prompt Engineering
+│   ├── __init__.py
+│   └── prompt.py                     # System prompts for AI agent
+│
+├── 📁 config/                         # Configuration Files
+│   ├── __init__.py
+│   └── config.yaml                   # Model configurations
+│
+├── 📁 tests/                          # Test Suite
+│   ├── __init__.py
+│   ├── conftest.py                   # Pytest fixtures
+│   ├── test_api.py                   # API endpoint tests
+│   └── test_places.py                # Places service tests
+│
+├── 📁 notebook/                       # Jupyter Notebooks
+│   └── experiments.ipynb             # Development experiments
+│
+├── 📁 output/                         # Generated Travel Plans (Markdown files)
+├── 📁 graphs/                         # Agent graph visualizations
+├── 📁 logs/                           # Application logs
+│
+├── 📄 main.py                         # FastAPI Application Entry Point
+├── 📄 streamlit_app.py               # Streamlit UI (alternative interface)
+├── 📄 start.py                        # Startup script with multiple modes
+├── 📄 requirements.txt               # Python dependencies
+├── 📄 setup.py                        # Package setup
+├── 📄 pyproject.toml                 # Modern Python project config
+├── 📄 .env                            # Environment variables (API keys)
+├── 📄 .gitignore                     # Git ignore rules
+└── 📄 README.md                       # Project documentation
+
 *Built with ❤️ for travelers worldwide*
