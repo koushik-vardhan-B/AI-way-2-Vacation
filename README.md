@@ -70,9 +70,6 @@ python start.py dev
 # Production mode
 python start.py prod
 
-# Docker mode
-python start.py docker
-
 # Check configuration
 python start.py check
 ```
