@@ -1,4 +1,7 @@
-from fastapi import FastAPI, HTTPException, BackgroundTasks, Depends
+# =============================================================================
+# FILE: main.py - Updated with Database Integration
+# =============================================================================
+from fastapi import FastAPI, HTTPException, BackgroundTasks, Depends, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse, FileResponse
 from contextlib import asynccontextmanager
@@ -6,10 +9,11 @@ import asyncio
 import os
 import datetime
 import logging
+import time
 from typing import Optional, Dict, Any
 from dotenv import load_dotenv
 
-# Import your existing modules
+# Import existing modules
 from agent.agentic_workflow import GraphBuilder
 from utils.save_to_document import save_document
 
@@ -22,7 +26,23 @@ from api.models import (
     ErrorResponse
 )
 from api.dependencies import get_graph_builder, validate_api_key, check_rate_limit
-from api.routes import weather_router, currency_router, places_router, analytics_router
+from api.legacy_routes import weather_router, currency_router, places_router, analytics_router
+
+# Import database
+from database.base import engine, init_db, get_db
+from database import models, crud, schemas
+from sqlalchemy.orm import Session
+
+# Import new database routes
+import sys
+import os
+sys.path.append(os.path.join(os.path.dirname(__file__), 'api', 'routes'))
+import plans_routes
+import favorites_routes
+import user_routes
+import admin_routes
+import public_routes
+
 from core.config import get_settings, validate_environment
 from core.logging_config import setup_logging
 
@@ -40,17 +60,25 @@ logger = logging.getLogger(__name__)
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     """Manage application startup and shutdown"""
-    logger.info("🚀 Starting AI Travel Planner API...")
+    logger.info("🚀 Starting AI Travel Planner API with Database...")
     
     # Startup logic
     try:
-        # Initialize any startup dependencies here
         settings = get_settings()
         
         # Create necessary directories
         os.makedirs(settings.OUTPUT_DIR, exist_ok=True)
         os.makedirs(settings.GRAPHS_DIR, exist_ok=True)
         os.makedirs(settings.LOGS_DIR, exist_ok=True)
+        
+        # Initialize database
+        try:
+            logger.info("🗄️  Initializing database...")
+            init_db()
+            logger.info("✅ Database initialized successfully")
+        except Exception as e:
+            logger.error(f"❌ Database initialization failed: {e}")
+            logger.warning("⚠️  Continuing without database (legacy mode)")
         
         # Test critical services
         try:
@@ -73,8 +101,16 @@ async def lifespan(app: FastAPI):
 app = FastAPI(
     title="🌍 AI Travel Planner API",
     description="""
-    An intelligent travel planning API powered by AI agents that provides:
+    An intelligent travel planning API powered by AI agents with **PostgreSQL database** support.
     
+    ## 🎯 New Features with Database:
+    - **User Accounts** - Register and login
+    - **Save Travel Plans** - Keep your itineraries forever
+    - **Favorites** - Bookmark destinations
+    - **History** - View your search history
+    - **Dashboard** - Personal statistics and analytics
+    
+    ## 📋 Core Features:
     - 🎯 **Complete Travel Plans**: Comprehensive itineraries with day-by-day schedules
     - 🌤️ **Real-time Weather**: Current conditions and forecasts
     - 💰 **Cost Calculations**: Detailed budget breakdowns and currency conversion
@@ -82,19 +118,18 @@ app = FastAPI(
     - 🚌 **Transportation**: Local and inter-city travel options
     - 📊 **Analytics**: Usage statistics and popular destinations
     
-    ## Features
-    - AI-powered recommendations
-    - Multiple destination support
-    - Real-time data integration
-    - Comprehensive cost analysis
-    - Weather-aware planning
+    ## 🔐 Authentication:
+    Most endpoints require authentication. To use them:
+    1. Register: `POST /auth/register`
+    2. Login: `POST /auth/token`
+    3. Use the token in `Authorization: Bearer <token>` header
     
-    ## Quick Start
-    1. Use `/query` for simple travel planning
-    2. Use `/plan-trip` for detailed customized plans
-    3. Explore individual services like `/weather`, `/currency`, `/places`
+    ## 📚 Quick Start:
+    1. **No Auth Required**: `/public/*`, `/health`, `/destinations`
+    2. **With Auth**: `/plans/*`, `/favorites/*`, `/users/me/*`
+    3. **Admin Only**: `/admin/*`
     """,
-    version="1.0.0",
+    version="2.0.0",
     lifespan=lifespan,
     docs_url="/docs",
     redoc_url="/redoc",
@@ -117,11 +152,57 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Include routers
+# Include routers - Database routes (NEW)
+# Note: auth_routes contains authentication functions, not a router
+app.include_router(plans_routes.router)
+app.include_router(favorites_routes.router)
+app.include_router(user_routes.router)
+app.include_router(admin_routes.router)
+app.include_router(public_routes.router)
+
+# Include routers - Existing API routes
 app.include_router(weather_router)
 app.include_router(currency_router)
 app.include_router(places_router)
 app.include_router(analytics_router)
+
+# Middleware for API usage tracking
+@app.middleware("http")
+async def log_api_usage(request: Request, call_next):
+    """Track API usage in database"""
+    start_time = time.time()
+    
+    # Process request
+    response = await call_next(request)
+    
+    # Calculate response time
+    response_time = (time.time() - start_time) * 1000  # milliseconds
+    
+    # Log to database (in background)
+    try:
+        db = next(get_db())
+        try:
+            # Get user_id if authenticated
+            user_id = None
+            if hasattr(request.state, "user"):
+                user_id = request.state.user.id
+            
+            # Log API usage
+            crud.create_api_usage(
+                db=db,
+                endpoint=str(request.url.path),
+                method=request.method,
+                status_code=response.status_code,
+                response_time=response_time,
+                user_id=user_id,
+                ip_address=request.client.host if request.client else None
+            )
+        finally:
+            db.close()
+    except Exception as e:
+        logger.error(f"Failed to log API usage: {e}")
+    
+    return response
 
 # Global exception handler
 @app.exception_handler(Exception)
@@ -144,21 +225,24 @@ async def health_check():
     """Health check endpoint"""
     return HealthResponse(
         status="healthy",
-        message="🌍 Welcome to AI Trip Planner API! Use /docs to explore all features.",
+        message="🌍 Welcome to AI Trip Planner API v2.0 with Database! Use /docs to explore all features.",
         timestamp=datetime.datetime.now().isoformat(),
-        version="1.0.0"
+        version="2.0.0"
     )
 
-# Main travel planning endpoints
-@app.post("/query", response_model=TravelPlanResponse, tags=["🎯 Travel Planning"])
+# Legacy endpoints (kept for backward compatibility)
+@app.post("/query", response_model=TravelPlanResponse, tags=["🎯 Legacy Travel Planning"])
 async def query_travel_agent(
     query: QueryRequest,
     background_tasks: BackgroundTasks,
     _: bool = Depends(check_rate_limit),
-    graph_builder: GraphBuilder = Depends(get_graph_builder)
+    graph_builder: GraphBuilder = Depends(get_graph_builder),
+    db: Session = Depends(get_db)
 ):
     """
-    🎯 **Generate a comprehensive travel plan based on your query**
+    🎯 **Legacy endpoint - Generate travel plan (No authentication required)**
+    
+    **Note**: This endpoint doesn't save to database. Use `/plans/generate` with authentication to save plans.
     
     Simply describe your travel needs and get a complete plan including:
     - 📅 Day-by-day itinerary (tourist + offbeat routes)
@@ -176,6 +260,7 @@ async def query_travel_agent(
     - "Adventure trip to New Zealand for 2 weeks"
     """
     try:
+        start_time = time.time()
         logger.info(f"📝 Processing travel query: {query.question[:100]}...")
         
         # Build the agent graph
@@ -194,8 +279,22 @@ async def query_travel_agent(
         else:
             final_output = str(output)
         
+        execution_time = time.time() - start_time
+        
         # Save document in background
         background_tasks.add_task(save_travel_plan, final_output, query.question)
+        
+        # Log query to database (anonymous)
+        try:
+            query_log = schemas.QueryCreate(
+                query_text=query.question,
+                response_length=len(final_output),
+                status_code=200,
+                execution_time=execution_time
+            )
+            crud.create_query(db=db, query=query_log, user_id=None)
+        except Exception as e:
+            logger.warning(f"Failed to log query to database: {e}")
         
         logger.info("✅ Travel plan generated successfully")
         
@@ -213,7 +312,7 @@ async def query_travel_agent(
             detail=f"Failed to generate travel plan: {str(e)}"
         )
 
-@app.post("/plan-trip", response_model=TravelPlanResponse, tags=["🎯 Travel Planning"])
+@app.post("/plan-trip", response_model=TravelPlanResponse, tags=["🎯 Legacy Travel Planning"])
 async def plan_detailed_trip(
     request: TravelPlanRequest,
     background_tasks: BackgroundTasks,
@@ -221,20 +320,9 @@ async def plan_detailed_trip(
     graph_builder: GraphBuilder = Depends(get_graph_builder)
 ):
     """
-    🎯 **Create a customized travel plan with specific parameters**
+    🎯 **Legacy endpoint - Create detailed travel plan (No authentication required)**
     
-    Perfect for detailed planning with specific requirements:
-    - 📍 **Destination**: Specify exactly where you want to go
-    - ⏰ **Duration**: Set the number of days
-    - 💰 **Budget**: Optional budget constraints
-    - 🎨 **Preferences**: Choose activity types you prefer
-    - 👥 **Group Size**: Plan for solo, couple, or group travel
-    - 💱 **Currency**: Get costs in your preferred currency
-    
-    **Preference Options:**
-    `cultural`, `adventure`, `relaxing`, `food`, `nightlife`, `shopping`, 
-    `nature`, `historical`, `beach`, `mountain`, `city`, `luxury`, `budget`, 
-    `family`, `romantic`
+    **Note**: This endpoint doesn't save to database. Use `/plans/generate` with authentication to save plans.
     """
     try:
         # Build comprehensive query from request parameters
@@ -367,7 +455,7 @@ async def download_travel_plan(filename: str):
 
 @app.get("/list-plans", tags=["📁 Files"])
 async def list_saved_plans():
-    """📋 **List all saved travel plans**"""
+    """📋 **List all saved travel plans (files)**"""
     try:
         output_dir = settings.OUTPUT_DIR
         if not os.path.exists(output_dir):
@@ -401,26 +489,38 @@ async def get_api_status():
     return {
         "status": "operational",
         "uptime": datetime.datetime.now().isoformat(),
-        "version": "1.0.0",
+        "version": "2.0.0",
+        "database": "SQLite enabled",
         "environment": os.getenv("ENVIRONMENT", "development"),
         "features": {
             "ai_planning": "✅ AI-powered comprehensive travel planning",
+            "user_accounts": "✅ User registration and authentication",
+            "save_plans": "✅ Save and manage travel plans",
+            "favorites": "✅ Bookmark favorite destinations",
+            "history": "✅ Query and plan history tracking",
             "real_time_weather": "✅ Live weather data and forecasts",
             "cost_calculation": "✅ Detailed budget breakdowns",
             "currency_conversion": "✅ Multi-currency support",
             "place_discovery": "✅ Attractions, restaurants, activities",
             "transportation": "✅ Local and inter-city options",
             "document_export": "✅ Markdown file generation",
-            "api_analytics": "✅ Usage statistics and monitoring"
+            "api_analytics": "✅ Usage statistics and monitoring",
+            "admin_dashboard": "✅ Admin statistics and management"
         },
         "endpoints": {
-            "planning": ["/query", "/plan-trip"],
+            "authentication": ["/auth/register", "/auth/token", "/auth/me"],
+            "travel_plans": ["/plans/generate", "/plans/", "/plans/{id}"],
+            "favorites": ["/favorites/", "/favorites/{id}"],
+            "user_dashboard": ["/users/me/stats", "/users/me/history"],
+            "public": ["/public/popular-destinations", "/public/stats"],
+            "legacy": ["/query", "/plan-trip"],
             "weather": ["/weather/current", "/weather/forecast"],
             "currency": ["/currency/convert", "/currency/rates"],
             "places": ["/places/search", "/places/popular"],
             "information": ["/destinations", "/travel-tips"],
             "files": ["/download-plan", "/list-plans"],
-            "system": ["/health", "/status", "/analytics/stats"]
+            "system": ["/health", "/status", "/analytics/stats"],
+            "admin": ["/admin/stats", "/admin/users"]
         },
         "supported_destinations": "🌍 Worldwide coverage",
         "supported_currencies": "💱 150+ currencies supported",
@@ -429,28 +529,24 @@ async def get_api_status():
             "Google Places API", 
             "Tavily Search API",
             "Exchange Rate API",
-            "AI Language Models (Groq/OpenAI)"
+            "AI Language Models (Groq/OpenAI)",
+            "PostgreSQL Database"
         ]
     }
 
 # Background tasks
 async def save_graph_visualization(react_app):
-    """Save the agent graph visualization only if not already saved for this session"""
+    """Save the agent graph visualization"""
     try:
-        # Use a session-based or daily filename to avoid saving repeatedly
-        timestamp = datetime.datetime.now().strftime("%Y%m%d")
+        png_graph = react_app.get_graph().draw_mermaid_png()
+        timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
         filename = f"graph_{timestamp}.png"
-        file_path = os.path.join(settings.GRAPHS_DIR, filename)
-
-        # Only save if file does not exist
-        if not os.path.exists(file_path):
-            png_graph = react_app.get_graph().draw_mermaid_png()
-            os.makedirs(settings.GRAPHS_DIR, exist_ok=True)
-            with open(file_path, "wb") as f:
-                f.write(png_graph)
-            logger.info(f"📊 Graph saved as {filename}")
-        else:
-            logger.info(f"📊 Graph already saved for today: {filename}")
+        
+        os.makedirs(settings.GRAPHS_DIR, exist_ok=True)
+        with open(os.path.join(settings.GRAPHS_DIR, filename), "wb") as f:
+            f.write(png_graph)
+        
+        logger.info(f"📊 Graph saved as {filename}")
     except Exception as e:
         logger.warning(f"⚠️ Could not save graph: {e}")
 
@@ -504,6 +600,15 @@ if settings.DEBUG:
             except Exception as e:
                 results["currency"] = f"❌ Error: {str(e)}"
             
+            # Test database
+            try:
+                db = next(get_db())
+                stats = crud.get_system_stats(db)
+                db.close()
+                results["database"] = "✅ Working"
+            except Exception as e:
+                results["database"] = f"❌ Error: {str(e)}"
+            
             return {
                 "status": "debug_mode",
                 "tool_tests": results,
@@ -512,6 +617,28 @@ if settings.DEBUG:
             
         except Exception as e:
             return {"error": f"Debug test failed: {str(e)}"}
+    
+    @app.get("/debug/db-stats", tags=["🔧 Debug"])
+    async def get_database_stats(db: Session = Depends(get_db)):
+        """🔧 **Get database statistics (Debug mode only)**"""
+        try:
+            stats = crud.get_system_stats(db)
+            
+            return {
+                "database": "connected",
+                "statistics": stats,
+                "tables": {
+                    "users": db.query(models.User).count(),
+                    "travel_plans": db.query(models.TravelPlan).count(),
+                    "queries": db.query(models.Query).count(),
+                    "favorites": db.query(models.Favorite).count(),
+                    "destinations": db.query(models.Destination).count(),
+                    "api_usage": db.query(models.ApiUsage).count()
+                },
+                "timestamp": datetime.datetime.now().isoformat()
+            }
+        except Exception as e:
+            return {"error": f"Database stats failed: {str(e)}"}
 
 # Run the application
 if __name__ == "__main__":

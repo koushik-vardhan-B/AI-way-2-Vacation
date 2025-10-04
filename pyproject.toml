@@ -1,14 +1,37 @@
 [project]
-name = "ai-trip-planner"
+name = "ai_trip_planner"
 version = "0.1.0"
-description = "WAY2VACATION"
-readme = "README.md"
+description = "AI-powered travel planning assistant"
 requires-python = ">=3.10"
+dynamic = ["authors"]
 dependencies = [
-    "pandas>=2.3.0",
+	"langchain",
+	"langchain-community",
+	"langchain-experimental",
+	"fastapi",
+	"python-dotenv",
+	"streamlit",
+	"uvicorn",
+	"pydantic",
+	"httpx",
+	"requests",
+	"langchain_google_community",
+	"langchain_tavily",
+	"langchain_groq",
+	"langchain_openai",
+	"langgraph",
+	"pytest",
+	"argparse",
+	"pathlib",
+	"sqlalchemy>=2.0.0",
+	"psycopg2-binary>=2.9.9",
+	"alembic>=1.13.0",
+	"python-jose[cryptography]>=3.3.0",
+	"passlib[bcrypt]>=1.7.4",
 ]
 
-[tool.uv.workspace]
-members = [
-    "AI_Travel_Planner",
-]
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+

@@ -18,4 +18,8 @@ pytest
 argparse
 pathlib
 
--e .
+sqlalchemy
+psycopg2-binary
+alembic
+python-jose[cryptography]
+passlib[bcrypt]
