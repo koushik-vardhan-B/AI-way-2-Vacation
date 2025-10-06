@@ -42,17 +42,16 @@ class User(Base):
     queries = relationship("Query", back_populates="user", cascade="all, delete-orphan")
     favorites = relationship("Favorite", back_populates="user", cascade="all, delete-orphan")
     api_usage = relationship("ApiUsage", back_populates="user", cascade="all, delete-orphan")
-    sessions = relationship("Session", back_populates="user", cascade="all, delete-orphan")
 
 class TravelPlan(Base):
     """Travel plans/itineraries table"""
     __tablename__ = "travel_plans"
     
     id = Column(Integer, primary_key=True, index=True)
-    user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
+    user_id = Column(Integer, ForeignKey("users.id", ondelete="CASCADE"), nullable=False, index=True)
     
     # Basic info
-    title = Column(String(255), nullable=False)
+    title = Column(String(255), nullable=False, index=True)  # Add index for search
     destination = Column(String(255), nullable=False, index=True)
     duration = Column(Integer, nullable=False)  # days
     budget = Column(Float)
@@ -74,7 +73,7 @@ class TravelPlan(Base):
     restaurants = Column(JSON)
     
     # Timestamps
-    created_at = Column(DateTime(timezone=True), server_default=func.now())
+    created_at = Column(DateTime(timezone=True), server_default=func.now(), index=True)  # Add index for sorting
     updated_at = Column(DateTime(timezone=True), onupdate=func.now())
     
     # Relationships
@@ -85,7 +84,7 @@ class Query(Base):
     __tablename__ = "queries"
     
     id = Column(Integer, primary_key=True, index=True)
-    user_id = Column(Integer, ForeignKey("users.id"), nullable=True)
+    user_id = Column(Integer, ForeignKey("users.id", ondelete="SET NULL"), index=True)
     
     query_text = Column(Text, nullable=False)
     response_length = Column(Integer)
@@ -96,7 +95,7 @@ class Query(Base):
     ip_address = Column(String(45))
     user_agent = Column(String(255))
     
-    created_at = Column(DateTime(timezone=True), server_default=func.now())
+    created_at = Column(DateTime(timezone=True), server_default=func.now(), index=True)
     
     # Relationships
     user = relationship("User", back_populates="queries")
@@ -154,17 +153,3 @@ class ApiUsage(Base):
     
     # Relationships
     user = relationship("User", back_populates="api_usage")
-
-class Session(Base):
-    """User sessions for token management"""
-    __tablename__ = "sessions"
-    
-    id = Column(Integer, primary_key=True, index=True)
-    user_id = Column(Integer, ForeignKey("users.id", ondelete="CASCADE"), nullable=False)
-    token = Column(String(255), unique=True, nullable=False, index=True)
-    expires_at = Column(DateTime(timezone=True), nullable=False)
-    
-    created_at = Column(DateTime(timezone=True), server_default=func.now())
-    
-    # Relationships
-    user = relationship("User", back_populates="sessions")

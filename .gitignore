@@ -11,3 +11,4 @@ wheels/
 env
 .env
 venv/
+travel_planner.db

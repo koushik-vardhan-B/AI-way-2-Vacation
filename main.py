@@ -34,14 +34,14 @@ from database import models, crud, schemas
 from sqlalchemy.orm import Session
 
 # Import new database routes
-import sys
-import os
-sys.path.append(os.path.join(os.path.dirname(__file__), 'api', 'routes'))
-import plans_routes
-import favorites_routes
-import user_routes
-import admin_routes
-import public_routes
+from api.routes import (
+    plans_routes,
+    favorites_routes,
+    user_routes,
+    admin_routes,
+    public_routes,
+    auth_routes_fixed
+)
 
 from core.config import get_settings, validate_environment
 from core.logging_config import setup_logging
@@ -101,7 +101,7 @@ async def lifespan(app: FastAPI):
 app = FastAPI(
     title="🌍 AI Travel Planner API",
     description="""
-    An intelligent travel planning API powered by AI agents with **PostgreSQL database** support.
+    An intelligent travel planning API powered by AI agents with **SQlite 3 database** support.
     
     ## 🎯 New Features with Database:
     - **User Accounts** - Register and login
@@ -159,6 +159,7 @@ app.include_router(favorites_routes.router)
 app.include_router(user_routes.router)
 app.include_router(admin_routes.router)
 app.include_router(public_routes.router)
+app.include_router(auth_routes_fixed.router)
 
 # Include routers - Existing API routes
 app.include_router(weather_router)
