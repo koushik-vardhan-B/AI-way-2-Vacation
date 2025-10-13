@@ -46,9 +46,9 @@ class TravelPlanRequest(BaseModel):
         example=2
     )
     currency: Optional[str] = Field(
-        "USD",
+        "INR",
         description="Preferred currency for cost calculations",
-        example="USD"
+        example="INR"
     )
     
     @validator('preferences')
@@ -110,14 +110,14 @@ class CurrencyConversionRequest(BaseModel):
         description="Source currency code",
         min_length=3,
         max_length=3,
-        example="USD"
+        example="INR"
     )
     to_currency: str = Field(
         ..., 
         description="Target currency code",
         min_length=3,
         max_length=3,
-        example="EUR"
+        example="USD"
     )
 
 class CurrencyConversionResponse(BaseModel):
@@ -163,7 +163,7 @@ class TripSummary(BaseModel):
     destination: str
     duration: int
     total_cost: Optional[float] = None
-    currency: str = "USD"
+    currency: str = "INR"
     created_at: str
     highlights: List[str] = []
 
