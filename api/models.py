@@ -31,7 +31,7 @@ class TravelPlanRequest(BaseModel):
     budget: Optional[str] = Field(
         None,
         description="Budget for the trip",
-        example="$2000"
+        example="₹2000"
     )
     preferences: Optional[List[str]] = Field(
         None,
