@@ -9,7 +9,8 @@ from database import models, schemas
 from passlib.context import CryptContext
 
 # Password hashing
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+# Use pbkdf2_sha256 to remove bcrypt's 72-byte input limitation entirely
+pwd_context = CryptContext(schemes=["pbkdf2_sha256"], deprecated="auto")
 
 # ===== User CRUD =====
 def get_user(db: Session, user_id: int) -> Optional[models.User]:
