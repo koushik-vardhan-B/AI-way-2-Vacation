@@ -38,6 +38,15 @@ class Settings(BaseSettings):
     GRAPHS_DIR: str = "./graphs"
     LOGS_DIR: str = "./logs"
 
+
+    #SMTP
+    SMTP_SERVER: str = "smtp.gmail.com"
+    SMTP_PORT: int = 587
+    SMTP_USERNAME: str = "anone3877@gmail.com"
+    SMTP_PASSWORD: str = "pgxg nhtd rody fzco"
+    FROM_EMAIL: str = "anone3877@gmail.com"
+    FRONTEND_URL: str="http://localhost:3000"
+
     class Config:
         env_file = ".env"
         case_sensitive = True

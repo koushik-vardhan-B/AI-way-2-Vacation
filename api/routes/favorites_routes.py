@@ -49,23 +49,23 @@ async def remove_favorite(
     logger.info(f"Favorite deleted: ID={favorite_id}, User={current_user.username}")
     return None
 
-@router.delete("/by-name/{destination_name}", status_code=status.HTTP_204_NO_CONTENT)
-async def remove_favorite_by_name(
-    destination_name: str,
-    db: Session = Depends(get_db),
-    current_user: schemas.UserResponse = Depends(get_current_active_user)
-):
-    """Remove favorite by destination name"""
-    success = crud.delete_favorite_by_name(
-        db, 
-        destination_name=destination_name, 
-        user_id=current_user.id
-    )
+# @router.delete("/by-name/{destination_name}", status_code=status.HTTP_204_NO_CONTENT)
+# async def remove_favorite_by_name(
+#     destination_name: str,
+#     db: Session = Depends(get_db),
+#     current_user: schemas.UserResponse = Depends(get_current_active_user)
+# ):
+#     """Remove favorite by destination name"""
+#     success = crud.delete_favorite_by_name(
+#         db, 
+#         destination_name=destination_name, 
+#         user_id=current_user.id
+#     )
     
-    if not success:
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND,
-            detail="Favorite not found"
-        )
+#     if not success:
+#         raise HTTPException(
+#             status_code=status.HTTP_404_NOT_FOUND,
+#             detail="Favorite not found"
+#         )
     
-    return None
+#     return None

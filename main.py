@@ -12,6 +12,7 @@ import logging
 import time
 from typing import Optional, Dict, Any
 from dotenv import load_dotenv
+from fastapi.middleware.cors import CORSMiddleware
 
 # Import existing modules
 from agent.agentic_workflow import GraphBuilder
@@ -146,12 +147,11 @@ app = FastAPI(
 settings = get_settings()
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=settings.CORS_ORIGINS,
+    allow_origins=["http://localhost:3000",""],  # Your React app URL
     allow_credentials=True,
-    allow_methods=["GET", "POST", "PUT", "DELETE"],
+    allow_methods=["*"],
     allow_headers=["*"],
 )
-
 # Include routers - Database routes (NEW)
 # Note: auth_routes contains authentication functions, not a router
 app.include_router(plans_routes.router)

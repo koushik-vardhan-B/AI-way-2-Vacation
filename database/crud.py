@@ -31,7 +31,6 @@ def create_user(db: Session, user: schemas.UserCreate) -> models.User:
     db_user = models.User(
         email=user.email,
         username=user.username,
-        full_name=user.full_name,
         hashed_password=hashed_password
     )
     db.add(db_user)
@@ -49,7 +48,31 @@ def update_last_login(db: Session, user_id: int):
     if user:
         user.last_login = datetime.utcnow()
         db.commit()
+def create_google_user(db: Session, user: schemas.UserCreate):
+    """Create a new user from Google OAuth"""
+    db_user = models.User(
+        email=user.email,
+        username=user.username,
+        hashed_password="google_oauth",  # Special marker for Google users
+        is_active=True
+    )
+    db.add(db_user)
+    db.commit()
+    db.refresh(db_user)
+    return db_user
+def get_user_by_email(db: Session, email: str):
+    return db.query(models.User).filter(models.User.email == email).first()
 
+def verify_password(plain_password: str, hashed_password: str) -> bool:
+    # Your password verification logic
+    return pwd_context.verify(plain_password, hashed_password)
+
+def update_last_login(db: Session, user_id: int):
+    user = db.query(models.User).filter(models.User.id == user_id).first()
+    if user:
+        user.last_login = datetime.utcnow()
+        db.commit()
+        
 def update_user(db: Session, user_id: int, user_update: schemas.UserUpdate) -> Optional[models.User]:
     """Update user information"""
     db_user = get_user(db, user_id)
