@@ -12,3 +12,4 @@ env
 .env
 venv/
 travel_planner.db
+myenv

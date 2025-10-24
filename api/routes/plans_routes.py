@@ -104,6 +104,8 @@ async def generate_and_save_travel_plan(
             detail=f"Failed to generate travel plan: {str(e)}"
         )
 
+
+
 @router.get("/", response_model=List[schemas.TravelPlanListResponse])
 async def get_my_travel_plans(
     skip: int = 0,
@@ -174,18 +176,18 @@ async def delete_travel_plan(
     logger.info(f"Plan deleted: ID={plan_id}, User={current_user.username}")
     return None
 
-@router.get("/search/{search_term}", response_model=List[schemas.TravelPlanListResponse])
-async def search_my_plans(
-    search_term: str,
-    limit: int = 10,
-    db: Session = Depends(get_db),
-    current_user: schemas.UserResponse = Depends(get_current_active_user)
-):
-    """Search your travel plans by destination or title"""
-    plans = crud.search_travel_plans(
-        db, 
-        user_id=current_user.id, 
-        search_term=search_term, 
-        limit=limit
-    )
-    return plans
+# @router.get("/search/{search_term}", response_model=List[schemas.TravelPlanListResponse])
+# async def search_my_plans(
+#     search_term: str,
+#     limit: int = 10,
+#     db: Session = Depends(get_db),
+#     current_user: schemas.UserResponse = Depends(get_current_active_user)
+# ):
+#     """Search your travel plans by destination or title"""
+#     plans = crud.search_travel_plans(
+#         db, 
+#         user_id=current_user.id, 
+#         search_term=search_term, 
+#         limit=limit
+#     )
+#     return plans

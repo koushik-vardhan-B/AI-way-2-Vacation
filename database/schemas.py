@@ -18,25 +18,49 @@ class PlanStatus(str, Enum):
 class UserBase(BaseModel):
     email: EmailStr
     username: str = Field(..., min_length=3, max_length=50)
-    full_name: Optional[str] = None
 
 class UserCreate(UserBase):
-    password: str = Field(..., min_length=8, max_length=100)
+    username: str
+    email: str  # Try with str instead of EmailStr first
+    password: str
 
 class UserUpdate(BaseModel):
     email: Optional[EmailStr] = None
-    full_name: Optional[str] = None
     password: Optional[str] = Field(None, min_length=8)
 
-class UserResponse(UserBase):
+class UserResponse(BaseModel):
     id: int
-    role: UserRole
-    is_active: bool
-    is_verified: bool
-    created_at: datetime
+    username: str
+    email: str
     
     class Config:
         from_attributes = True
+
+# In your schemas.py
+
+class UserLogin(BaseModel):
+    email: str
+    password: str
+
+class TokenWithUser(BaseModel):
+    access_token: str
+    token_type: str
+    username: str
+    email: str
+    
+    class Config:
+        from_attributes = True
+
+class GoogleAuth(BaseModel):
+    email: str
+    username: str
+
+class ForgotPasswordRequest(BaseModel):
+    email: str
+
+class ResetPasswordRequest(BaseModel):
+    token: str
+    new_password: str = Field(..., min_length=6)
 
 # ===== Travel Plan Schemas =====
 class TravelPlanBase(BaseModel):
@@ -86,6 +110,7 @@ class TravelPlanListResponse(BaseModel):
     
     class Config:
         from_attributes = True
+
 
 # ===== Query Schemas =====
 class QueryCreate(BaseModel):
