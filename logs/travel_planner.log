@@ -1,0 +1,54 @@
+2025-10-24 10:01:24 - root - INFO - Logging system initialized
+2025-10-24 10:01:24 - main - INFO - 🚀 Starting AI Travel Planner API with Database...
+2025-10-24 10:01:24 - main - INFO - 🗄️  Initializing database...
+2025-10-24 10:01:25 - database.base - INFO - ✅ Database tables created successfully
+2025-10-24 10:01:25 - main - INFO - ✅ Database initialized successfully
+2025-10-24 10:01:25 - api.dependencies - INFO - Creating GraphBuilder with provider: groq
+2025-10-24 10:01:25 - googlemaps.client - INFO - API queries_quota: 60
+2025-10-24 10:01:26 - main - INFO - ✅ AI Agent initialized successfully
+2025-10-24 10:01:26 - main - INFO - ✅ API started successfully on 0.0.0.0:8000
+2025-10-24 10:03:11 - api.routes.auth_routes_fixed - INFO - New user registered: Koushik Vardhan
+2025-10-24 10:03:33 - api.routes.auth_routes_fixed - INFO - User logged in: Koushik Vardhan
+2025-10-24 10:06:56 - api.dependencies - INFO - Creating GraphBuilder with provider: groq
+2025-10-24 10:06:56 - googlemaps.client - INFO - API queries_quota: 60
+2025-10-24 10:06:56 - api.routes.plans_routes - INFO - Generating plan for user Koushik Vardhan: Plan a 10-day trip to agra  with 5 people of budget  Rs50000
+2025-10-24 10:07:14 - api.routes.plans_routes - INFO - Plan created successfully: ID=1, User=Koushik Vardhan
+2025-10-24 11:04:22 - main - INFO - 🔄 Shutting down AI Travel Planner API...
+2025-10-24 12:55:12 - root - INFO - Logging system initialized
+2025-10-24 12:55:12 - main - INFO - 🚀 Starting AI Travel Planner API with Database...
+2025-10-24 12:55:12 - main - INFO - 🗄️  Initializing database...
+2025-10-24 12:55:13 - database.base - INFO - ✅ Database tables created successfully
+2025-10-24 12:55:13 - main - INFO - ✅ Database initialized successfully
+2025-10-24 12:55:13 - api.dependencies - INFO - Creating GraphBuilder with provider: groq
+2025-10-24 12:55:14 - googlemaps.client - INFO - API queries_quota: 60
+2025-10-24 12:55:14 - main - INFO - ✅ AI Agent initialized successfully
+2025-10-24 12:55:14 - main - INFO - ✅ API started successfully on 0.0.0.0:8000
+2025-10-24 12:59:40 - api.routes.auth_routes_fixed - INFO - User logged in: Koushik Vardhan
+2025-10-24 13:00:29 - api.dependencies - INFO - Creating GraphBuilder with provider: groq
+2025-10-24 13:00:30 - googlemaps.client - INFO - API queries_quota: 60
+2025-10-24 13:00:49 - api.routes.plans_routes - INFO - Conversation continued for plan 1
+2025-10-24 13:03:38 - api.routes.plans_routes - INFO - Conversation continued for plan 1
+2025-10-24 13:06:10 - main - INFO - 🔄 Shutting down AI Travel Planner API...
+2025-10-25 11:42:56 - root - INFO - Logging system initialized
+2025-10-25 11:42:57 - main - INFO - 🚀 Starting AI Travel Planner API with Database...
+2025-10-25 11:42:57 - main - INFO - 🗄️  Initializing database...
+2025-10-25 11:42:57 - database.base - INFO - ✅ Database tables created successfully
+2025-10-25 11:42:57 - main - INFO - ✅ Database initialized successfully
+2025-10-25 11:42:57 - api.dependencies - INFO - Creating GraphBuilder with provider: groq
+2025-10-25 11:42:59 - googlemaps.client - INFO - API queries_quota: 60
+2025-10-25 11:42:59 - main - INFO - ✅ AI Agent initialized successfully
+2025-10-25 11:42:59 - main - INFO - ✅ API started successfully on 0.0.0.0:8000
+2025-10-25 11:51:20 - root - INFO - Logging system initialized
+2025-10-25 11:51:21 - main - INFO - 🚀 Starting AI Travel Planner API with Database...
+2025-10-25 11:51:21 - main - INFO - 🗄️  Initializing database...
+2025-10-25 11:51:21 - database.base - INFO - ✅ Database tables created successfully
+2025-10-25 11:51:21 - main - INFO - ✅ Database initialized successfully
+2025-10-25 11:51:21 - api.dependencies - INFO - Creating GraphBuilder with provider: groq
+2025-10-25 11:51:22 - googlemaps.client - INFO - API queries_quota: 60
+2025-10-25 11:51:22 - main - INFO - ✅ AI Agent initialized successfully
+2025-10-25 11:51:22 - main - INFO - ✅ API started successfully on 0.0.0.0:8000
+2025-10-25 11:53:33 - api.routes.auth_routes_fixed - INFO - User logged in: Koushik Vardhan
+2025-10-25 11:56:20 - api.dependencies - INFO - Creating GraphBuilder with provider: groq
+2025-10-25 11:56:20 - googlemaps.client - INFO - API queries_quota: 60
+2025-10-25 11:56:29 - api.routes.plans_routes - INFO - Conversation continued for plan 1
+2025-10-25 11:58:28 - main - INFO - 🔄 Shutting down AI Travel Planner API...
