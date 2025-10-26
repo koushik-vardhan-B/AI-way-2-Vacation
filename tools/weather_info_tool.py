@@ -13,29 +13,56 @@ class WeatherInfoTool:
     
     def _setup_tools(self) -> List:
         """Setup all tools for the weather forecast tool"""
+        
         @tool
         def get_current_weather(city: str) -> str:
-            """Get current weather for a city"""
+            """Get current weather for a city with temperature in Celsius"""
             weather_data = self.weather_service.get_current_weather(city)
-            if weather_data:
+            if weather_data and 'main' in weather_data:
                 temp = weather_data.get('main', {}).get('temp', 'N/A')
+                feels_like = weather_data.get('main', {}).get('feels_like', 'N/A')
+                humidity = weather_data.get('main', {}).get('humidity', 'N/A')
                 desc = weather_data.get('weather', [{}])[0].get('description', 'N/A')
-                return f"Current weather in {city}: {temp}°C, {desc}"
+                
+                # Format temperature properly
+                if temp != 'N/A':
+                    temp = round(float(temp), 1)
+                if feels_like != 'N/A':
+                    feels_like = round(float(feels_like), 1)
+                
+                return (
+                    f"Current weather in {city}:\n"
+                    f"- Temperature: {temp}°C\n"
+                    f"- Feels like: {feels_like}°C\n"
+                    f"- Conditions: {desc}\n"
+                    f"- Humidity: {humidity}%"
+                )
             return f"Could not fetch weather for {city}"
         
         @tool
         def get_weather_forecast(city: str) -> str:
-            """Get weather forecast for a city"""
+            """Get 5-day weather forecast for a city"""
             forecast_data = self.weather_service.get_forecast_weather(city)
             if forecast_data and 'list' in forecast_data:
                 forecast_summary = []
-                for i in range(len(forecast_data['list'])):
-                    item = forecast_data['list'][i]
+                current_date = None
+                
+                for item in forecast_data['list']:
                     date = item['dt_txt'].split(' ')[0]
-                    temp = item['main']['temp']
+                    time = item['dt_txt'].split(' ')[1]
+                    temp = round(float(item['main']['temp']), 1)
                     desc = item['weather'][0]['description']
-                    forecast_summary.append(f"{date}: {temp} degree celcius , {desc}")
-                return f"Weather forecast for {city}:\n" + "\n".join(forecast_summary)
+                    
+                    # Group by date for cleaner output
+                    if date != current_date:
+                        if current_date:  # Not the first entry
+                            forecast_summary.append("")  # Add spacing between days
+                        current_date = date
+                        forecast_summary.append(f"**{date}**")
+                    
+                    forecast_summary.append(f"  {time}: {temp}°C, {desc}")
+                
+                return f"5-day weather forecast for {city}:\n" + "\n".join(forecast_summary)
             return f"Could not fetch forecast for {city}"
     
         return [get_current_weather, get_weather_forecast]

@@ -1,9 +1,9 @@
 from fastapi import APIRouter, Depends, HTTPException, BackgroundTasks, status
 from sqlalchemy.orm import Session
 from typing import List
+from langchain_core.messages import HumanMessage, AIMessage
 import logging
 import time
-import json
 
 from database import crud, schemas
 from database.base import get_db
@@ -16,7 +16,10 @@ logger = logging.getLogger(__name__)
 
 router = APIRouter(prefix="/plans", tags=["📋 Travel Plans"])
 
-# Store conversation histories per plan (in production, use Redis or database)
+# ============================================================================
+# IMPORTANT: In-memory conversation store
+# In production, replace this with Redis or database storage
+# ============================================================================
 conversation_store = {}
 
 @router.post("/generate", response_model=schemas.TravelPlanResponse, status_code=status.HTTP_201_CREATED)
@@ -34,11 +37,12 @@ async def generate_and_save_travel_plan(
     1. Uses AI to generate comprehensive travel itinerary
     2. Saves the plan to your account
     3. Returns the complete plan with ID
+    4. Initializes conversation memory for this plan
     """
     start_time = time.time()
     
     try:
-        # Build AI query
+        # Build AI query from request parameters
         query_parts = [f"Plan a {request.duration}-day trip to {request.destination}"]
         if request.budget:
             query_parts.append(f"with a budget of {request.currency} {request.budget}")
@@ -50,15 +54,22 @@ async def generate_and_save_travel_plan(
         full_query = " ".join(query_parts)
         logger.info(f"Generating plan for user {current_user.username}: {full_query}")
         
-        # Generate plan using AI with unique thread_id for this plan
-        react_app = graph_builder()
-        thread_id = f"user_{current_user.id}_new_plan"
-        
+        # ================================================================
+        # MEMORY SETUP: Create unique thread_id for this conversation
+        # This thread_id will be used to track all messages for this plan
+        # ================================================================
+        thread_id = f"user_{current_user.id}_new_plan_{int(time.time())}"
         config = {"configurable": {"thread_id": thread_id}}
-        messages = {"messages": [full_query]}
+        
+        # Build the graph and invoke with memory
+        react_app = graph_builder()
+        messages = {"messages": [HumanMessage(content=full_query)]}
+        
+        # Invoke with config containing thread_id
+        # LangGraph will automatically store this conversation in memory
         output = react_app.invoke(messages, config)
         
-        # Extract content
+        # Extract AI response
         if isinstance(output, dict) and "messages" in output:
             plan_content = output["messages"][-1].content
         else:
@@ -66,7 +77,9 @@ async def generate_and_save_travel_plan(
         
         execution_time = time.time() - start_time
         
-        # Create plan in database
+        # ================================================================
+        # DATABASE: Save the plan
+        # ================================================================
         plan_data = schemas.TravelPlanCreate(
             title=f"{request.duration}-Day Trip to {request.destination}",
             destination=request.destination,
@@ -81,13 +94,19 @@ async def generate_and_save_travel_plan(
         
         db_plan = crud.create_travel_plan(db=db, plan=plan_data, user_id=current_user.id)
         
-        # Store conversation history for this plan
-        conversation_store[db_plan.id] = [
-            {"role": "user", "content": full_query},
-            {"role": "assistant", "content": plan_content}
-        ]
+        # ================================================================
+        # CONVERSATION MEMORY: Store thread_id for this plan
+        # This links the plan_id to its conversation thread
+        # ================================================================
+        conversation_store[db_plan.id] = {
+            "thread_id": thread_id,
+            "messages": [
+                {"role": "user", "content": full_query},
+                {"role": "assistant", "content": plan_content}
+            ]
+        }
         
-        # Log query
+        # Log query for analytics
         query_log = schemas.QueryCreate(
             query_text=full_query,
             response_length=len(plan_content),
@@ -106,17 +125,18 @@ async def generate_and_save_travel_plan(
         # Save to file in background
         background_tasks.add_task(save_document, plan_content)
         
-        logger.info(f"Plan created successfully: ID={db_plan.id}, User={current_user.username}")
+        logger.info(f"Plan created: ID={db_plan.id}, Thread={thread_id}")
         
         return db_plan
         
     except Exception as e:
-        logger.error(f"Error generating plan: {e}")
+        logger.error(f"Error generating plan: {e}", exc_info=True)
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=f"Failed to generate travel plan: {str(e)}"
         )
 
+# Replace the continue_conversation function in api/routes/plans_routes.py
 
 @router.post("/chat/{plan_id}", response_model=schemas.TravelPlanResponse)
 async def continue_conversation(
@@ -128,11 +148,6 @@ async def continue_conversation(
 ):
     """
     Continue conversation about an existing travel plan
-    
-    This endpoint allows you to:
-    - Ask questions about your plan
-    - Request modifications
-    - Get additional recommendations
     """
     try:
         # Verify plan belongs to user
@@ -142,6 +157,8 @@ async def continue_conversation(
                 status_code=status.HTTP_404_NOT_FOUND,
                 detail="Travel plan not found"
             )
+        
+        logger.info(f"💬 Chat request for plan {plan_id}: {message[:100]}...")
         
         # Get or initialize conversation history
         if plan_id not in conversation_store:
@@ -169,37 +186,55 @@ async def continue_conversation(
         thread_id = f"user_{current_user.id}_plan_{plan_id}"
         config = {"configurable": {"thread_id": thread_id}}
         
+        logger.info(f"🤖 Invoking AI agent for plan {plan_id}...")
         output = react_app.invoke({"messages": langgraph_messages}, config)
         
-        # Extract response
+        # Extract response - THIS IS THE KEY FIX
+        ai_response = ""
         if isinstance(output, dict) and "messages" in output:
-            ai_response = output["messages"][-1].content
+            last_message = output["messages"][-1]
+            ai_response = last_message.content if hasattr(last_message, 'content') else str(last_message)
         else:
             ai_response = str(output)
+        
+        logger.info(f"✅ AI response generated ({len(ai_response)} chars): {ai_response[:200]}...")
         
         # Update conversation history
         conversation_history.append({"role": "assistant", "content": ai_response})
         conversation_store[plan_id] = conversation_history
         
-        # Update plan content with latest information
-        updated_content = f"{plan.content}\n\n---\n\n**User:** {message}\n\n**Assistant:** {ai_response}"
+        # DON'T update the database content yet - just return the AI response
+        # The full content update should happen only on explicit save
         
-        plan_update = schemas.TravelPlanUpdate(content=updated_content)
-        updated_plan = crud.update_travel_plan(
-            db,
-            plan_id=plan_id,
-            user_id=current_user.id,
-            plan_update=plan_update
+        logger.info(f"💾 Conversation for plan {plan_id} updated (messages: {len(conversation_history)})")
+        
+        # Create a response object that matches TravelPlanResponse schema
+        # but with the AI response as the main content
+        response_plan = schemas.TravelPlanResponse(
+            id=plan.id,
+            user_id=plan.user_id,
+            title=plan.title,
+            destination=plan.destination,
+            duration=plan.duration,
+            budget=plan.budget,
+            currency=plan.currency,
+            content=ai_response,  # THIS IS THE KEY - return the AI response, not the full plan
+            summary=plan.summary,
+            preferences=plan.preferences,
+            group_size=plan.group_size,
+            status=plan.status,
+            created_at=plan.created_at,
+            updated_at=plan.updated_at
         )
         
-        logger.info(f"Conversation continued for plan {plan_id}")
+        logger.info(f"📤 Sending response for plan {plan_id}")
         
-        return updated_plan
+        return response_plan
         
     except HTTPException:
         raise
     except Exception as e:
-        logger.error(f"Error in conversation: {e}")
+        logger.error(f"❌ Error in conversation for plan {plan_id}: {e}", exc_info=True)
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=f"Failed to process message: {str(e)}"
@@ -242,7 +277,11 @@ async def get_conversation_history(
     db: Session = Depends(get_db),
     current_user: schemas.UserResponse = Depends(get_current_active_user)
 ):
-    """Get conversation history for a plan"""
+    """
+    Get full conversation history for a plan
+    
+    Returns all messages exchanged about this plan
+    """
     # Verify plan belongs to user
     plan = crud.get_travel_plan(db, plan_id=plan_id, user_id=current_user.id)
     if not plan:
@@ -252,11 +291,14 @@ async def get_conversation_history(
         )
     
     # Return conversation history
-    history = conversation_store.get(plan_id, [])
+    conversation_data = conversation_store.get(plan_id, {})
+    messages = conversation_data.get("messages", [])
+    
     return {
         "plan_id": plan_id,
-        "conversation": history,
-        "message_count": len(history)
+        "thread_id": conversation_data.get("thread_id", ""),
+        "conversation": messages,
+        "message_count": len(messages)
     }
 
 
@@ -291,7 +333,7 @@ async def delete_travel_plan(
     db: Session = Depends(get_db),
     current_user: schemas.UserResponse = Depends(get_current_active_user)
 ):
-    """Delete travel plan"""
+    """Delete travel plan and its conversation memory"""
     success = crud.delete_travel_plan(db, plan_id=plan_id, user_id=current_user.id)
     
     if not success:
@@ -300,24 +342,10 @@ async def delete_travel_plan(
             detail="Travel plan not found"
         )
     
-    # Clear conversation history
+    # Clear conversation memory for this plan
     if plan_id in conversation_store:
         del conversation_store[plan_id]
+        logger.info(f"Cleared conversation memory for plan {plan_id}")
     
     logger.info(f"Plan deleted: ID={plan_id}, User={current_user.username}")
     return None
-# @router.get("/search/{search_term}", response_model=List[schemas.TravelPlanListResponse])
-# async def search_my_plans(
-#     search_term: str,
-#     limit: int = 10,
-#     db: Session = Depends(get_db),
-#     current_user: schemas.UserResponse = Depends(get_current_active_user)
-# ):
-#     """Search your travel plans by destination or title"""
-#     plans = crud.search_travel_plans(
-#         db, 
-#         user_id=current_user.id, 
-#         search_term=search_term, 
-#         limit=limit
-#     )
-#     return plans
