@@ -23,65 +23,14 @@ currency_router = APIRouter(prefix="/currency", tags=["Currency"])
 places_router = APIRouter(prefix="/places", tags=["Places"])
 analytics_router = APIRouter(prefix="/analytics", tags=["Analytics"])
 
-# Weather endpoints
-@weather_router.post("/current", response_model=WeatherResponse)
-async def get_current_weather(
-    request: WeatherRequest,
-    _: bool = Depends(validate_api_key),
-    __: bool = Depends(check_rate_limit)
-):
-    """Get current weather for a specific city"""
-    try:
-        weather_tool = WeatherInfoTool()
-        
-        # Get current weather
-        current_weather_tool = weather_tool.weather_tool_list[0]  # get_current_weather
-        current_result = current_weather_tool.invoke({"city": request.city})
-        
-        # Get forecast
-        forecast_tool = weather_tool.weather_tool_list[1]  # get_weather_forecast
-        forecast_result = forecast_tool.invoke({"city": request.city})
-        
-        return WeatherResponse(
-            city=request.city,
-            current_weather={"description": current_result},
-            forecast=[{"description": forecast_result}],
-            timestamp=datetime.datetime.now().isoformat()
-        )
-        
-    except Exception as e:
-        logger.error(f"Error fetching weather for {request.city}: {e}")
-        raise HTTPException(
-            status_code=500,
-            detail=f"Failed to fetch weather data: {str(e)}"
-        )
-
-@weather_router.get("/forecast/{city}")
-async def get_weather_forecast(
-    city: str,
-    _: bool = Depends(validate_api_key)
-):
-    """Get weather forecast for a city"""
-    try:
-        weather_tool = WeatherInfoTool()
-        forecast_tool = weather_tool.weather_tool_list[1]
-        result = forecast_tool.invoke({"city": city})
-        
-        return {
-            "city": city,
-            "forecast": result,
-            "timestamp": datetime.datetime.now().isoformat()
-        }
-    except Exception as e:
-        logger.error(f"Error fetching forecast for {city}: {e}")
-        raise HTTPException(status_code=500, detail=str(e))
 
 # Currency endpoints
+
 @currency_router.post("/convert", response_model=CurrencyConversionResponse)
 async def convert_currency(
-    request: CurrencyConversionRequest,
-    _: bool = Depends(validate_api_key),
-    __: bool = Depends(check_rate_limit)
+    request: CurrencyConversionRequest
+    # REMOVE: _: bool = Depends(validate_api_key),
+    # REMOVE: __: bool = Depends(check_rate_limit)
 ):
     """Convert amount from one currency to another"""
     try:
@@ -113,10 +62,63 @@ async def convert_currency(
             detail=f"Failed to convert currency: {str(e)}"
         )
 
+@weather_router.post("/current", response_model=WeatherResponse)
+async def get_current_weather(
+    request: WeatherRequest
+    # REMOVE: _: bool = Depends(validate_api_key),
+    # REMOVE: __: bool = Depends(check_rate_limit)
+):
+    """Get current weather for a specific city"""
+    try:
+        weather_tool = WeatherInfoTool()
+        
+        # Get current weather
+        current_weather_tool = weather_tool.weather_tool_list[0]  # get_current_weather
+        current_result = current_weather_tool.invoke({"city": request.city})
+        
+        # Get forecast
+        forecast_tool = weather_tool.weather_tool_list[1]  # get_weather_forecast
+        forecast_result = forecast_tool.invoke({"city": request.city})
+        
+        return WeatherResponse(
+            city=request.city,
+            current_weather={"description": current_result},
+            forecast=[{"description": forecast_result}],
+            timestamp=datetime.datetime.now().isoformat()
+        )
+        
+    except Exception as e:
+        logger.error(f"Error fetching weather for {request.city}: {e}")
+        raise HTTPException(
+            status_code=500,
+            detail=f"Failed to fetch weather data: {str(e)}"
+        )
+
+@weather_router.get("/forecast/{city}")
+async def get_weather_forecast(
+    city: str
+    # REMOVE: _: bool = Depends(validate_api_key)
+):
+    """Get weather forecast for a city"""
+    try:
+        weather_tool = WeatherInfoTool()
+        forecast_tool = weather_tool.weather_tool_list[1]
+        result = forecast_tool.invoke({"city": city})
+        
+        return {
+            "city": city,
+            "forecast": result,
+            "timestamp": datetime.datetime.now().isoformat()
+        }
+    except Exception as e:
+        logger.error(f"Error fetching forecast for {city}: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+# Also fix the currency rates endpoint if it exists
 @currency_router.get("/rates/{base_currency}")
 async def get_exchange_rates(
-    base_currency: str,
-    _: bool = Depends(validate_api_key)
+    base_currency: str
+    # REMOVE: _: bool = Depends(validate_api_key)
 ):
     """Get current exchange rates for a base currency"""
     try:
@@ -149,7 +151,6 @@ async def get_exchange_rates(
     except Exception as e:
         logger.error(f"Error fetching exchange rates: {e}")
         raise HTTPException(status_code=500, detail=str(e))
-
 # Places endpoints
 @places_router.post("/search", response_model=PlaceSearchResponse)
 async def search_places(

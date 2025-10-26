@@ -52,3 +52,6 @@
 2025-10-25 11:56:20 - googlemaps.client - INFO - API queries_quota: 60
 2025-10-25 11:56:29 - api.routes.plans_routes - INFO - Conversation continued for plan 1
 2025-10-25 11:58:28 - main - INFO - 🔄 Shutting down AI Travel Planner API...
+2025-10-26 23:07:49 - root - INFO - Logging system initialized
+2025-10-26 23:07:49 - api.dependencies - INFO - Creating GraphBuilder with provider: groq
+2025-10-26 23:07:50 - googlemaps.client - INFO - API queries_quota: 60
