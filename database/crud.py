@@ -157,6 +157,23 @@ def delete_travel_plan(db: Session, plan_id: int, user_id: int) -> bool:
         return True
     return False
 
+def update_conversation_history(
+    db: Session,
+    plan_id: int,
+    user_id: int,
+    conversation_history: List[dict],
+    thread_id: Optional[str] = None
+) -> Optional[models.TravelPlan]:
+    """Update conversation history for a travel plan"""
+    db_plan = get_travel_plan(db, plan_id, user_id)
+    if db_plan:
+        db_plan.conversation_history = conversation_history
+        if thread_id:
+            db_plan.thread_id = thread_id
+        db.commit()
+        db.refresh(db_plan)
+    return db_plan
+
 def get_all_travel_plans_by_destination(
     db: Session,
     destination: str,

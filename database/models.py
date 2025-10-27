@@ -71,6 +71,10 @@ class TravelPlan(Base):
     attractions = Column(JSON)
     restaurants = Column(JSON)
     
+    # Conversation memory
+    conversation_history = Column(JSON)  # Store chat messages as JSON array
+    thread_id = Column(String(255))  # LangGraph thread ID for memory
+    
     # Timestamps
     created_at = Column(DateTime(timezone=True), server_default=func.now(), index=True)  # Add index for sorting
     updated_at = Column(DateTime(timezone=True), onupdate=func.now())

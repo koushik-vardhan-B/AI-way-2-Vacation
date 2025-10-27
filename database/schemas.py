@@ -79,6 +79,8 @@ class TravelPlanCreate(TravelPlanBase):
     cost_breakdown: Optional[Dict[str, Any]] = None
     attractions: Optional[List[str]] = None
     restaurants: Optional[List[str]] = None
+    conversation_history: Optional[List[Dict[str, str]]] = None
+    thread_id: Optional[str] = None
 
 class TravelPlanUpdate(BaseModel):
     title: Optional[str] = None
@@ -92,6 +94,8 @@ class TravelPlanResponse(TravelPlanBase):
     content: str
     summary: Optional[str]
     status: PlanStatus
+    conversation_history: Optional[List[Dict[str, str]]] = None
+    thread_id: Optional[str] = None
     created_at: datetime
     updated_at: Optional[datetime]
     

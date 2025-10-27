@@ -17,10 +17,9 @@ logger = logging.getLogger(__name__)
 router = APIRouter(prefix="/plans", tags=["📋 Travel Plans"])
 
 # ============================================================================
-# IMPORTANT: In-memory conversation store
-# In production, replace this with Redis or database storage
+# CONVERSATION PERSISTENCE: Now stored in database!
+# Conversations are persisted in the travel_plans table
 # ============================================================================
-conversation_store = {}
 
 @router.post("/generate", response_model=schemas.TravelPlanResponse, status_code=status.HTTP_201_CREATED)
 async def generate_and_save_travel_plan(
@@ -95,16 +94,20 @@ async def generate_and_save_travel_plan(
         db_plan = crud.create_travel_plan(db=db, plan=plan_data, user_id=current_user.id)
         
         # ================================================================
-        # CONVERSATION MEMORY: Store thread_id for this plan
-        # This links the plan_id to its conversation thread
+        # CONVERSATION MEMORY: Store in database for persistence
+        # This ensures conversations survive server restarts
         # ================================================================
-        conversation_store[db_plan.id] = {
-            "thread_id": thread_id,
-            "messages": [
-                {"role": "user", "content": full_query},
-                {"role": "assistant", "content": plan_content}
-            ]
-        }
+        initial_conversation = [
+            {"role": "user", "content": full_query},
+            {"role": "assistant", "content": plan_content}
+        ]
+        crud.update_conversation_history(
+            db=db,
+            plan_id=db_plan.id,
+            user_id=current_user.id,
+            conversation_history=initial_conversation,
+            thread_id=thread_id
+        )
         
         # Log query for analytics
         query_log = schemas.QueryCreate(
@@ -160,14 +163,10 @@ async def continue_conversation(
         
         logger.info(f"💬 Chat request for plan {plan_id}: {message[:100]}...")
         
-        # Get or initialize conversation history
-        if plan_id not in conversation_store:
-            conversation_store[plan_id] = [
-                {"role": "assistant", "content": plan.content}
-            ]
-        
-        # Build conversation context
-        conversation_history = conversation_store[plan_id]
+        # Load conversation history from database
+        conversation_history = plan.conversation_history or [
+            {"role": "assistant", "content": plan.content}
+        ]
         
         # Add user message
         conversation_history.append({"role": "user", "content": message})
@@ -187,26 +186,60 @@ async def continue_conversation(
         config = {"configurable": {"thread_id": thread_id}}
         
         logger.info(f"🤖 Invoking AI agent for plan {plan_id}...")
-        output = react_app.invoke({"messages": langgraph_messages}, config)
         
-        # Extract response - THIS IS THE KEY FIX
+        # Try to invoke with retry logic for tool calling errors
+        max_retries = 2
         ai_response = ""
-        if isinstance(output, dict) and "messages" in output:
-            last_message = output["messages"][-1]
-            ai_response = last_message.content if hasattr(last_message, 'content') else str(last_message)
-        else:
-            ai_response = str(output)
+        
+        for attempt in range(max_retries):
+            try:
+                output = react_app.invoke({"messages": langgraph_messages}, config)
+                
+                # Extract response
+                if isinstance(output, dict) and "messages" in output:
+                    last_message = output["messages"][-1]
+                    ai_response = last_message.content if hasattr(last_message, 'content') else str(last_message)
+                else:
+                    ai_response = str(output)
+                break  # Success, exit retry loop
+                
+            except Exception as invoke_error:
+                logger.warning(f"⚠️ Attempt {attempt + 1}/{max_retries} failed: {str(invoke_error)[:200]}")
+                
+                if "tool_use_failed" in str(invoke_error) or "Failed to call a function" in str(invoke_error):
+                    if attempt < max_retries - 1:
+                        logger.info("🔄 Retrying with simplified prompt...")
+                        # Simplify the last user message to avoid tool calling issues
+                        if langgraph_messages and isinstance(langgraph_messages[-1], HumanMessage):
+                            simplified_msg = HumanMessage(
+                                content=f"Please provide information about: {langgraph_messages[-1].content}"
+                            )
+                            langgraph_messages[-1] = simplified_msg
+                        continue
+                    else:
+                        # Last attempt failed, provide fallback response
+                        logger.error(f"❌ All retry attempts failed for tool calling")
+                        ai_response = f"I apologize, but I'm having trouble processing your request about {plan.destination}. The AI service is experiencing technical difficulties with tool calls. Please try rephrasing your question or ask something more specific about your trip plan."
+                        break
+                else:
+                    # Non-tool-calling error, re-raise
+                    raise
         
         logger.info(f"✅ AI response generated ({len(ai_response)} chars): {ai_response[:200]}...")
         
-        # Update conversation history
+        # Update conversation history and persist to database
         conversation_history.append({"role": "assistant", "content": ai_response})
-        conversation_store[plan_id] = conversation_history
         
-        # DON'T update the database content yet - just return the AI response
-        # The full content update should happen only on explicit save
+        # Save conversation to database for persistence
+        crud.update_conversation_history(
+            db=db,
+            plan_id=plan_id,
+            user_id=current_user.id,
+            conversation_history=conversation_history,
+            thread_id=plan.thread_id
+        )
         
-        logger.info(f"💾 Conversation for plan {plan_id} updated (messages: {len(conversation_history)})")
+        logger.info(f"💾 Conversation for plan {plan_id} saved to database (messages: {len(conversation_history)})")
         
         # Create a response object that matches TravelPlanResponse schema
         # but with the AI response as the main content
@@ -259,7 +292,15 @@ async def get_travel_plan(
     db: Session = Depends(get_db),
     current_user: schemas.UserResponse = Depends(get_current_active_user)
 ):
-    """Get specific travel plan by ID"""
+    """
+    Get specific travel plan by ID with full conversation history
+    
+    This endpoint returns the complete plan including:
+    - Plan details (destination, duration, budget, etc.)
+    - Full content/itinerary
+    - Complete conversation history (all chat messages)
+    - Thread ID for continued conversations
+    """
     plan = crud.get_travel_plan(db, plan_id=plan_id, user_id=current_user.id)
     
     if not plan:
@@ -267,6 +308,13 @@ async def get_travel_plan(
             status_code=status.HTTP_404_NOT_FOUND,
             detail="Travel plan not found"
         )
+    
+    # Log what we're returning to help debug frontend issues
+    conv_count = len(plan.conversation_history) if plan.conversation_history else 0
+    logger.info(f"📤 Returning plan {plan_id}: {conv_count} messages in conversation history")
+    
+    if conv_count == 0:
+        logger.warning(f"⚠️  Plan {plan_id} has NO conversation history - this may cause issues on frontend")
     
     return plan
 
@@ -290,15 +338,14 @@ async def get_conversation_history(
             detail="Travel plan not found"
         )
     
-    # Return conversation history
-    conversation_data = conversation_store.get(plan_id, {})
-    messages = conversation_data.get("messages", [])
+    # Return conversation history from database
+    conversation_history = plan.conversation_history or []
     
     return {
         "plan_id": plan_id,
-        "thread_id": conversation_data.get("thread_id", ""),
-        "conversation": messages,
-        "message_count": len(messages)
+        "thread_id": plan.thread_id or "",
+        "conversation": conversation_history,
+        "message_count": len(conversation_history)
     }
 
 
@@ -342,10 +389,6 @@ async def delete_travel_plan(
             detail="Travel plan not found"
         )
     
-    # Clear conversation memory for this plan
-    if plan_id in conversation_store:
-        del conversation_store[plan_id]
-        logger.info(f"Cleared conversation memory for plan {plan_id}")
-    
-    logger.info(f"Plan deleted: ID={plan_id}, User={current_user.username}")
+    # Conversation history is automatically deleted with the plan (cascade)
+    logger.info(f"Plan and conversation history deleted: ID={plan_id}, User={current_user.username}")
     return None

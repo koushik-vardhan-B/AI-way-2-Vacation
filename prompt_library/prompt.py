@@ -22,7 +22,7 @@ SYSTEM_PROMPT = SystemMessage(
     - show the currency in country of the tourist destination
     - if the currency is not in Indian rupee(INR), convert it to INR
     - Local weather conditions
-    - Weather details
+    - Weather forcast for 5 days
     - Comprehensive Budget Breakdown  
     \
     Provide everything in one comprehensive response formatted in clean Markdown.
