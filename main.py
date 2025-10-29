@@ -41,7 +41,9 @@ from api.routes import (
     user_routes,
     admin_routes,
     public_routes,
-    auth_routes_fixed
+    auth_routes_fixed,
+    map_routes,
+    directions_routes
 )
 
 from core.config import get_settings, validate_environment
@@ -160,6 +162,8 @@ app.include_router(user_routes.router)
 app.include_router(admin_routes.router)
 app.include_router(public_routes.router)
 app.include_router(auth_routes_fixed.router)
+app.include_router(map_routes.router)
+app.include_router(directions_routes.router)
 
 # Include routers - Existing API routes
 app.include_router(weather_router)

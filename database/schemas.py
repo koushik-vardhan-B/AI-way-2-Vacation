@@ -81,6 +81,7 @@ class TravelPlanCreate(TravelPlanBase):
     restaurants: Optional[List[str]] = None
     conversation_history: Optional[List[Dict[str, str]]] = None
     thread_id: Optional[str] = None
+    location_data: Optional[Dict[str, Any]] = None  # Store map coordinates and location info
 
 class TravelPlanUpdate(BaseModel):
     title: Optional[str] = None
@@ -96,6 +97,7 @@ class TravelPlanResponse(TravelPlanBase):
     status: PlanStatus
     conversation_history: Optional[List[Dict[str, str]]] = None
     thread_id: Optional[str] = None
+    location_data: Optional[Dict[str, Any]] = None  # Map coordinates and location info
     created_at: datetime
     updated_at: Optional[datetime]
     

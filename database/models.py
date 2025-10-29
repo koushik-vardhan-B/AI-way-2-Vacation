@@ -70,6 +70,7 @@ class TravelPlan(Base):
     cost_breakdown = Column(JSON)
     attractions = Column(JSON)
     restaurants = Column(JSON)
+    location_data = Column(JSON)  # Store map coordinates and location info
     
     # Conversation memory
     conversation_history = Column(JSON)  # Store chat messages as JSON array
