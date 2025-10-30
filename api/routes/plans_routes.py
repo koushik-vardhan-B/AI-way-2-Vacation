@@ -20,7 +20,125 @@ router = APIRouter(prefix="/plans", tags=["📋 Travel Plans"])
 # CONVERSATION PERSISTENCE: Now stored in database!
 # Conversations are persisted in the travel_plans table
 # ============================================================================
+# In your plans_routes.py - Update the continue_conversation function
 
+@router.post("/chat/{plan_id}", response_model=schemas.ChatResponse)
+async def continue_conversation(
+    plan_id: int,
+    request: schemas.ChatRequest,
+    db: Session = Depends(get_db),
+    current_user: schemas.UserResponse = Depends(get_current_active_user),
+    graph_builder: GraphBuilder = Depends(get_graph_builder)
+):
+    """
+    Continue conversation about an existing travel plan and SAVE to database
+    """
+    try:
+        message = request.message
+        
+        # Verify plan belongs to user
+        plan = crud.get_travel_plan(db, plan_id=plan_id, user_id=current_user.id)
+        if not plan:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail="Travel plan not found"
+            )
+        
+        # Load conversation history from database
+        conversation_history = plan.conversation_history or []
+        
+        # If no conversation history exists, initialize with the original plan content
+        if not conversation_history:
+            conversation_history = [
+                {"role": "assistant", "content": plan.content}
+            ]
+        
+        # Add user message to conversation history
+        conversation_history.append({"role": "user", "content": message})
+        
+        # Convert to LangChain message format
+        langgraph_messages = []
+        for msg in conversation_history:
+            if msg["role"] == "user":
+                langgraph_messages.append(HumanMessage(content=msg["content"]))
+            else:
+                langgraph_messages.append(AIMessage(content=msg["content"]))
+        
+        # Generate response with full context
+        react_app = graph_builder()
+        
+        # Use existing thread_id or create new one
+        thread_id = plan.thread_id or f"user_{current_user.id}_plan_{plan_id}"
+        config = {"configurable": {"thread_id": thread_id}}
+        
+        # Generate AI response
+        max_retries = 2
+        ai_response = ""
+        
+        for attempt in range(max_retries):
+            try:
+                output = react_app.invoke({"messages": langgraph_messages}, config)
+                
+                # Extract response
+                if isinstance(output, dict) and "messages" in output:
+                    last_message = output["messages"][-1]
+                    ai_response = last_message.content if hasattr(last_message, 'content') else str(last_message)
+                else:
+                    ai_response = str(output)
+                break  # Success, exit retry loop
+                
+            except Exception as invoke_error:
+                if "tool_use_failed" in str(invoke_error) or "Failed to call a function" in str(invoke_error):
+                    if attempt < max_retries - 1:
+                        # Simplify the last user message to avoid tool calling issues
+                        if langgraph_messages and isinstance(langgraph_messages[-1], HumanMessage):
+                            simplified_msg = HumanMessage(
+                                content=f"Please provide information about: {langgraph_messages[-1].content}"
+                            )
+                            langgraph_messages[-1] = simplified_msg
+                        continue
+                    else:
+                        # Last attempt failed, provide fallback response
+                        ai_response = f"I apologize, but I'm having trouble processing your request about {plan.destination}. Please try rephrasing your question or ask something more specific about your trip plan."
+                        break
+                else:
+                    # Non-tool-calling error, re-raise
+                    raise
+        
+        # CRITICAL FIX: Create a NEW list to avoid reference issues
+        updated_conversation_history = conversation_history.copy()
+        updated_conversation_history.append({"role": "assistant", "content": ai_response})
+        
+        # Save updated conversation to database for persistence
+        updated_plan = crud.update_conversation_history(
+            db=db,
+            plan_id=plan_id,
+            user_id=current_user.id,
+            conversation_history=updated_conversation_history,  # Use the NEW list
+            thread_id=thread_id
+        )
+        
+        if not updated_plan:
+            raise HTTPException(
+                status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                detail="Failed to save conversation to database"
+            )
+        
+        return schemas.ChatResponse(
+            message=ai_response,
+            conversation_history=updated_conversation_history,
+            plan_id=plan_id,
+            thread_id=thread_id
+        )
+        
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Failed to process message: {str(e)}"
+        )
+        
 @router.post("/generate", response_model=schemas.TravelPlanResponse, status_code=status.HTTP_201_CREATED)
 async def generate_and_save_travel_plan(
     request: schemas.TravelPlanBase,
@@ -140,139 +258,6 @@ async def generate_and_save_travel_plan(
         )
 
 # Replace the continue_conversation function in api/routes/plans_routes.py
-
-@router.post("/chat/{plan_id}", response_model=schemas.TravelPlanResponse)
-async def continue_conversation(
-    plan_id: int,
-    message: str,
-    db: Session = Depends(get_db),
-    current_user: schemas.UserResponse = Depends(get_current_active_user),
-    graph_builder: GraphBuilder = Depends(get_graph_builder)
-):
-    """
-    Continue conversation about an existing travel plan
-    """
-    try:
-        # Verify plan belongs to user
-        plan = crud.get_travel_plan(db, plan_id=plan_id, user_id=current_user.id)
-        if not plan:
-            raise HTTPException(
-                status_code=status.HTTP_404_NOT_FOUND,
-                detail="Travel plan not found"
-            )
-        
-        logger.info(f"💬 Chat request for plan {plan_id}: {message[:100]}...")
-        
-        # Load conversation history from database
-        conversation_history = plan.conversation_history or [
-            {"role": "assistant", "content": plan.content}
-        ]
-        
-        # Add user message
-        conversation_history.append({"role": "user", "content": message})
-        
-        # Convert to LangChain message format
-        from langchain_core.messages import HumanMessage, AIMessage
-        langgraph_messages = []
-        for msg in conversation_history:
-            if msg["role"] == "user":
-                langgraph_messages.append(HumanMessage(content=msg["content"]))
-            else:
-                langgraph_messages.append(AIMessage(content=msg["content"]))
-        
-        # Generate response with full context
-        react_app = graph_builder()
-        thread_id = f"user_{current_user.id}_plan_{plan_id}"
-        config = {"configurable": {"thread_id": thread_id}}
-        
-        logger.info(f"🤖 Invoking AI agent for plan {plan_id}...")
-        
-        # Try to invoke with retry logic for tool calling errors
-        max_retries = 2
-        ai_response = ""
-        
-        for attempt in range(max_retries):
-            try:
-                output = react_app.invoke({"messages": langgraph_messages}, config)
-                
-                # Extract response
-                if isinstance(output, dict) and "messages" in output:
-                    last_message = output["messages"][-1]
-                    ai_response = last_message.content if hasattr(last_message, 'content') else str(last_message)
-                else:
-                    ai_response = str(output)
-                break  # Success, exit retry loop
-                
-            except Exception as invoke_error:
-                logger.warning(f"⚠️ Attempt {attempt + 1}/{max_retries} failed: {str(invoke_error)[:200]}")
-                
-                if "tool_use_failed" in str(invoke_error) or "Failed to call a function" in str(invoke_error):
-                    if attempt < max_retries - 1:
-                        logger.info("🔄 Retrying with simplified prompt...")
-                        # Simplify the last user message to avoid tool calling issues
-                        if langgraph_messages and isinstance(langgraph_messages[-1], HumanMessage):
-                            simplified_msg = HumanMessage(
-                                content=f"Please provide information about: {langgraph_messages[-1].content}"
-                            )
-                            langgraph_messages[-1] = simplified_msg
-                        continue
-                    else:
-                        # Last attempt failed, provide fallback response
-                        logger.error(f"❌ All retry attempts failed for tool calling")
-                        ai_response = f"I apologize, but I'm having trouble processing your request about {plan.destination}. The AI service is experiencing technical difficulties with tool calls. Please try rephrasing your question or ask something more specific about your trip plan."
-                        break
-                else:
-                    # Non-tool-calling error, re-raise
-                    raise
-        
-        logger.info(f"✅ AI response generated ({len(ai_response)} chars): {ai_response[:200]}...")
-        
-        # Update conversation history and persist to database
-        conversation_history.append({"role": "assistant", "content": ai_response})
-        
-        # Save conversation to database for persistence
-        crud.update_conversation_history(
-            db=db,
-            plan_id=plan_id,
-            user_id=current_user.id,
-            conversation_history=conversation_history,
-            thread_id=plan.thread_id
-        )
-        
-        logger.info(f"💾 Conversation for plan {plan_id} saved to database (messages: {len(conversation_history)})")
-        
-        # Create a response object that matches TravelPlanResponse schema
-        # but with the AI response as the main content
-        response_plan = schemas.TravelPlanResponse(
-            id=plan.id,
-            user_id=plan.user_id,
-            title=plan.title,
-            destination=plan.destination,
-            duration=plan.duration,
-            budget=plan.budget,
-            currency=plan.currency,
-            content=ai_response,  # THIS IS THE KEY - return the AI response, not the full plan
-            summary=plan.summary,
-            preferences=plan.preferences,
-            group_size=plan.group_size,
-            status=plan.status,
-            created_at=plan.created_at,
-            updated_at=plan.updated_at
-        )
-        
-        logger.info(f"📤 Sending response for plan {plan_id}")
-        
-        return response_plan
-        
-    except HTTPException:
-        raise
-    except Exception as e:
-        logger.error(f"❌ Error in conversation for plan {plan_id}: {e}", exc_info=True)
-        raise HTTPException(
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail=f"Failed to process message: {str(e)}"
-        )
-
 
 @router.get("/", response_model=List[schemas.TravelPlanListResponse])
 async def get_my_travel_plans(

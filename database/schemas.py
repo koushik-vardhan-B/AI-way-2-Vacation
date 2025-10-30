@@ -64,45 +64,41 @@ class ResetPasswordRequest(BaseModel):
 
 # ===== Travel Plan Schemas =====
 class TravelPlanBase(BaseModel):
-    title: str = Field(..., min_length=5, max_length=255)
-    destination: str = Field(..., min_length=2, max_length=255)
-    duration: int = Field(..., ge=1, le=90)
-    budget: Optional[float] = Field(None, ge=0)
-    currency: str = Field("USD", min_length=3, max_length=3)
-    preferences: Optional[List[str]] = None
-    group_size: int = Field(1, ge=1, le=20)
+    title: str
+    destination: str
+    duration: int
+    budget: Optional[float] = None
+    currency: str = "USD"
+    preferences: List[str] = []
+    group_size: int = 1
 
 class TravelPlanCreate(TravelPlanBase):
     content: str
-    summary: Optional[str] = None
-    weather_data: Optional[Dict[str, Any]] = None
-    cost_breakdown: Optional[Dict[str, Any]] = None
-    attractions: Optional[List[str]] = None
-    restaurants: Optional[List[str]] = None
-    conversation_history: Optional[List[Dict[str, str]]] = None
+    summary: str
+    conversation_history: Optional[List[dict]] = None
     thread_id: Optional[str] = None
-    location_data: Optional[Dict[str, Any]] = None  # Store map coordinates and location info
-
-class TravelPlanUpdate(BaseModel):
-    title: Optional[str] = None
-    status: Optional[PlanStatus] = None
-    content: Optional[str] = None
-    summary: Optional[str] = None
 
 class TravelPlanResponse(TravelPlanBase):
     id: int
     user_id: int
     content: str
-    summary: Optional[str]
-    status: PlanStatus
-    conversation_history: Optional[List[Dict[str, str]]] = None
+    summary: str
+    status: str
+    conversation_history: Optional[List[dict]] = None
     thread_id: Optional[str] = None
-    location_data: Optional[Dict[str, Any]] = None  # Map coordinates and location info
     created_at: datetime
-    updated_at: Optional[datetime]
-    
+    updated_at: datetime
+
     class Config:
         from_attributes = True
+
+class TravelPlanUpdate(BaseModel):
+    title: Optional[str] = None
+    destination: Optional[str] = None
+    duration: Optional[int] = None
+    budget: Optional[float] = None
+    content: Optional[str] = None
+    summary: Optional[str] = None
 
 class TravelPlanListResponse(BaseModel):
     """Lightweight response for listing plans"""
@@ -116,7 +112,17 @@ class TravelPlanListResponse(BaseModel):
     
     class Config:
         from_attributes = True
+class ChatRequest(BaseModel):
+    message: str
 
+class ChatResponse(BaseModel):
+    message: str
+    conversation_history: List[dict]
+    plan_id: int  # ✅ This is what's missing!
+    thread_id: str
+    
+    class Config:
+        from_attributes = True
 
 # ===== Query Schemas =====
 class QueryCreate(BaseModel):
