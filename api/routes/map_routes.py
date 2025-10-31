@@ -168,7 +168,6 @@ async def get_destination_map_data(
             center_location = place_result["result"]["geometry"]["location"]
             center = {"lat": center_location['lat'], "lng": center_location['lng']}
         
-        logger.info(f"🗺️ Fetching map data for {destination} at {center}")
         
         # Search for attractions
         attractions_raw = gmaps.places_nearby(
@@ -245,7 +244,6 @@ async def get_destination_map_data(
                 photo_reference=photo_ref
             ))
         
-        logger.info(f"✅ Found {len(attractions)} attractions, {len(restaurants)} restaurants, {len(hotels)} hotels")
         
         return MapDataResponse(
             destination=destination,

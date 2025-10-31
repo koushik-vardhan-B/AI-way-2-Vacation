@@ -93,7 +93,6 @@ async def get_directions(
         if request.avoid:
             params["avoid"] = request.avoid
         
-        logger.info(f"🧭 Getting directions from {request.origin} to {request.destination} via {request.mode}")
         
         # Get directions
         directions_result = gmaps.directions(**params)
@@ -136,7 +135,6 @@ async def get_directions(
                 "waypoint_order": route.get('waypoint_order', [])
             })
         
-        logger.info(f"✅ Found {len(routes)} route(s)")
         
         return {
             "origin": request.origin,
@@ -179,7 +177,6 @@ async def get_distance_matrix(
         origins_list = origins.split('|')
         destinations_list = destinations.split('|')
         
-        logger.info(f"📏 Getting distance matrix for {len(origins_list)} origins and {len(destinations_list)} destinations")
         
         result = gmaps.distance_matrix(
             origins=origins_list,
@@ -234,7 +231,6 @@ async def reverse_geocode(
         /reverse-geocode?lat=48.8584&lng=2.2945
     """
     try:
-        logger.info(f"📍 Reverse geocoding ({lat}, {lng})")
         
         result = gmaps.reverse_geocode((lat, lng))
         

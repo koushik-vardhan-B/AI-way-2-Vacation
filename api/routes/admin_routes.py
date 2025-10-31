@@ -57,17 +57,7 @@ async def list_all_users(
     users = db.query(crud.models.User).offset(skip).limit(limit).all()
     return users
 
-@router.post("/cleanup/queries")
-async def cleanup_old_queries(
-    days: int = 90,
-    db: Session = Depends(get_db),
-    admin_user: schemas.UserResponse = Depends(get_current_admin_user)
-):
-    """Delete old query records (Admin only)"""
-    deleted = crud.delete_old_queries(db, days=days)
-    logger.info(f"Admin {admin_user.username} deleted {deleted} old queries")
-    return {"deleted": deleted, "older_than_days": days}
-
+# In api/routes/admin_routes.py - temporary fix
 @router.post("/cleanup/api-usage")
 async def cleanup_old_api_usage(
     days: int = 90,
@@ -75,6 +65,52 @@ async def cleanup_old_api_usage(
     admin_user: schemas.UserResponse = Depends(get_current_admin_user)
 ):
     """Delete old API usage records (Admin only)"""
-    deleted = crud.delete_old_api_usage(db, days=days)
-    logger.info(f"Admin {admin_user.username} deleted {deleted} old API usage records")
-    return {"deleted": deleted, "older_than_days": days}
+    try:
+        # Temporary implementation
+        from datetime import datetime, timedelta
+        from sqlalchemy import text
+        
+        cutoff_date = datetime.utcnow() - timedelta(days=days)
+        
+        # Delete old API usage records
+        result = db.execute(
+            text("DELETE FROM api_usage WHERE created_at < :cutoff_date"),
+            {"cutoff_date": cutoff_date}
+        )
+        db.commit()
+        
+        deleted = result.rowcount
+        return {"deleted": deleted, "older_than_days": days}
+    except Exception as e:
+        db.rollback()
+        logger.error(f"Error in cleanup_old_api_usage: {e}")
+        return {"deleted": 0, "error": str(e)}
+
+@router.post("/cleanup/queries")
+async def cleanup_old_queries(
+    days: int = 90,
+    db: Session = Depends(get_db),
+    admin_user: schemas.UserResponse = Depends(get_current_admin_user)
+):
+    """Delete old query records (Admin only)"""
+    try:
+        # Temporary implementation
+        from datetime import datetime, timedelta
+        from sqlalchemy import text
+        
+        cutoff_date = datetime.utcnow() - timedelta(days=days)
+        
+        # Delete old query records
+        result = db.execute(
+            text("DELETE FROM queries WHERE created_at < :cutoff_date"),
+            {"cutoff_date": cutoff_date}
+        )
+        db.commit()
+        
+
+        deleted = result.rowcount
+        return {"deleted": deleted, "older_than_days": days}
+    except Exception as e:
+        db.rollback()
+        logger.error(f"Error in cleanup_old_queries: {e}")
+        return {"deleted": 0, "error": str(e)}

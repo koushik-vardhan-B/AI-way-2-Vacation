@@ -169,7 +169,6 @@ async def generate_and_save_travel_plan(
             query_parts.append(f"for {request.group_size} people")
         
         full_query = " ".join(query_parts)
-        logger.info(f"Generating plan for user {current_user.username}: {full_query}")
         
         # ================================================================
         # MEMORY SETUP: Create unique thread_id for this conversation
@@ -246,8 +245,8 @@ async def generate_and_save_travel_plan(
         # Save to file in background
         background_tasks.add_task(save_document, plan_content)
         
-        logger.info(f"Plan created: ID={db_plan.id}, Thread={thread_id}")
-        
+
+
         return db_plan
         
     except Exception as e:
@@ -296,7 +295,6 @@ async def get_travel_plan(
     
     # Log what we're returning to help debug frontend issues
     conv_count = len(plan.conversation_history) if plan.conversation_history else 0
-    logger.info(f"📤 Returning plan {plan_id}: {conv_count} messages in conversation history")
     
     if conv_count == 0:
         logger.warning(f"⚠️  Plan {plan_id} has NO conversation history - this may cause issues on frontend")
@@ -355,7 +353,6 @@ async def update_travel_plan(
             detail="Travel plan not found"
         )
     
-    logger.info(f"Plan updated: ID={plan_id}, User={current_user.username}")
     return updated_plan
 
 
@@ -375,5 +372,4 @@ async def delete_travel_plan(
         )
     
     # Conversation history is automatically deleted with the plan (cascade)
-    logger.info(f"Plan and conversation history deleted: ID={plan_id}, User={current_user.username}")
     return None

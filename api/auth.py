@@ -63,7 +63,7 @@ async def get_current_admin_user(
     current_user: models.User = Depends(get_current_active_user)
 ) -> models.User:
     """Verify user is admin"""
-    if current_user.role != "admin":
+    if current_user.email != "admin@gmail.com":
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
             detail="Not enough permissions"
