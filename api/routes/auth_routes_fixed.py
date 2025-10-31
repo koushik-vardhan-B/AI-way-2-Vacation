@@ -47,7 +47,6 @@ async def register_user(
         
         # Create new user
         new_user = crud.create_user(db=db, user=user)
-        logger.info(f"New user registered: {new_user.username}")
         return new_user
     except Exception as e:
         logger.error(f"Registration failed: {e}")
@@ -84,7 +83,6 @@ async def google_auth(
                 db=db, 
                 user=user_data, 
             )
-            logger.info(f"New Google user registered: {user.username}")
         
         # Update last login
         crud.update_last_login(db, user.id)
@@ -96,7 +94,6 @@ async def google_auth(
             expires_delta=access_token_expires
         )
         
-        logger.info(f"Google user logged in: {user.username}")
         return {
             "access_token": access_token, 
             "token_type": "bearer",
@@ -146,7 +143,6 @@ async def login(
             expires_delta=access_token_expires
         )
         
-        logger.info(f"User logged in: {user.username}")
         return {
             "access_token": access_token, 
             "token_type": "bearer",
@@ -195,7 +191,6 @@ async def login_for_access_token(
             expires_delta=access_token_expires
         )
         
-        logger.info(f"User logged in: {user.username}")
         return {"access_token": access_token, "token_type": "bearer"}
     except HTTPException:
         raise
@@ -234,7 +229,6 @@ async def forgot_password(
         # Send email in background
         background_tasks.add_task(send_password_reset_email, user.email, reset_token)
         
-        logger.info(f"Password reset email sending to: {user.email}")
        
         
     except HTTPException:
@@ -298,7 +292,6 @@ def send_password_reset_email(email: str, token: str):
         
         # Mark as sent successfully
         password_reset_tokens[token]["sent"] = True
-        logger.info(f"Password reset email sent successfully to: {email}")
         
     except Exception as e:
         logger.error(f"Failed to send password reset email to {email}: {e}")
@@ -347,7 +340,6 @@ async def reset_password(
         # Remove used token
         del password_reset_tokens[reset_data.token]
         
-        logger.info(f"Password reset successful for: {user.email}")
         return {"message": "Password reset successfully"}
         
     except HTTPException:
