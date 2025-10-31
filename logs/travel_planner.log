@@ -1,0 +1,349 @@
+2025-10-30 11:12:26 - root - INFO - Logging system initialized
+2025-10-30 11:12:26 - api.dependencies - INFO - Creating GraphBuilder with provider: groq
+2025-10-30 11:12:27 - googlemaps.client - INFO - API queries_quota: 60
+2025-10-30 11:13:20 - api.routes.auth_routes_fixed - INFO - User logged in: Koushik Vardhan
+2025-10-30 11:13:45 - api.dependencies - INFO - Creating GraphBuilder with provider: groq
+2025-10-30 11:13:48 - googlemaps.client - INFO - API queries_quota: 60
+2025-10-30 11:16:09 - root - INFO - Logging system initialized
+2025-10-30 11:16:09 - api.dependencies - INFO - Creating GraphBuilder with provider: groq
+2025-10-30 11:16:12 - googlemaps.client - INFO - API queries_quota: 60
+2025-10-30 11:16:24 - api.dependencies - INFO - Creating GraphBuilder with provider: groq
+2025-10-30 11:16:27 - googlemaps.client - INFO - API queries_quota: 60
+2025-10-30 11:16:42 - root - INFO - Logging system initialized
+2025-10-30 11:16:42 - api.dependencies - INFO - Creating GraphBuilder with provider: groq
+2025-10-30 11:16:43 - googlemaps.client - INFO - API queries_quota: 60
+2025-10-30 11:17:00 - root - INFO - Logging system initialized
+2025-10-30 11:17:00 - api.dependencies - INFO - Creating GraphBuilder with provider: groq
+2025-10-30 11:17:01 - googlemaps.client - INFO - API queries_quota: 60
+2025-10-30 11:17:18 - api.dependencies - INFO - Creating GraphBuilder with provider: groq
+2025-10-30 11:17:21 - googlemaps.client - INFO - API queries_quota: 60
+2025-10-30 11:21:28 - root - INFO - Logging system initialized
+2025-10-30 11:21:28 - api.dependencies - INFO - Creating GraphBuilder with provider: groq
+2025-10-30 11:21:29 - googlemaps.client - INFO - API queries_quota: 60
+2025-10-30 11:23:22 - api.routes.auth_routes_fixed - INFO - User logged in: Koushik Vardhan
+2025-10-30 11:23:42 - api.dependencies - INFO - Creating GraphBuilder with provider: groq
+2025-10-30 11:23:46 - googlemaps.client - INFO - API queries_quota: 60
+2025-10-30 11:23:46 - api.routes.plans_routes - INFO - Generating plan for user Koushik Vardhan: Plan a 7-day trip to Custom Destination
+2025-10-30 11:23:48 - api.routes.plans_routes - INFO - Plan created: ID=5, Thread=user_2_new_plan_1761803626
+2025-10-30 11:26:10 - root - INFO - Logging system initialized
+2025-10-30 11:26:11 - api.dependencies - INFO - Creating GraphBuilder with provider: groq
+2025-10-30 11:26:13 - googlemaps.client - INFO - API queries_quota: 60
+2025-10-30 11:26:50 - api.routes.auth_routes_fixed - INFO - User logged in: Koushik Vardhan
+2025-10-30 11:27:23 - api.dependencies - INFO - Creating GraphBuilder with provider: groq
+2025-10-30 11:27:26 - googlemaps.client - INFO - API queries_quota: 60
+2025-10-30 11:27:45 - api.routes.plans_routes - INFO - Generating plan for user Koushik Vardhan: Plan a 7-day trip to Australia with a budget of USD 10000.0 focusing on string activities for 4 people
+2025-10-30 11:27:50 - api.routes.plans_routes - INFO - Plan created: ID=6, Thread=user_2_new_plan_1761803865
+2025-10-30 11:41:35 - api.routes.plans_routes - INFO - Generating plan for user Koushik Vardhan: Plan a 7-day trip to Australia with a budget of USD 10000.0 focusing on family, adventure activities for 4 people
+2025-10-30 11:41:51 - api.routes.plans_routes - INFO - Plan created: ID=7, Thread=user_2_new_plan_1761804695
+2025-10-30 11:42:24 - api.routes.plans_routes - INFO - Generating plan for user Koushik Vardhan: Plan a 7-day trip to Australia with a budget of USD 10000.0 focusing on family, adventure activities for 4 people
+2025-10-30 11:42:30 - api.routes.plans_routes - INFO - Plan created: ID=8, Thread=user_2_new_plan_1761804744
+2025-10-30 11:42:41 - api.routes.plans_routes - INFO - Generating plan for user Koushik Vardhan: Plan a 7-day trip to Australia with a budget of USD 10000.0 focusing on family, adventure activities for 4 people
+2025-10-30 11:42:52 - api.routes.plans_routes - INFO - Plan created: ID=9, Thread=user_2_new_plan_1761804761
+2025-10-30 11:42:57 - api.routes.plans_routes - INFO - Plan and conversation history deleted: ID=9, User=Koushik Vardhan
+2025-10-30 11:43:02 - api.routes.plans_routes - INFO - Plan and conversation history deleted: ID=8, User=Koushik Vardhan
+2025-10-30 11:43:05 - api.routes.plans_routes - INFO - Generating plan for user Koushik Vardhan: Plan a 7-day trip to Australia with a budget of USD 10000.0 focusing on family, adventure activities for 4 people
+2025-10-30 11:43:14 - api.routes.plans_routes - INFO - Plan created: ID=8, Thread=user_2_new_plan_1761804785
+2025-10-30 11:44:30 - root - INFO - Logging system initialized
+2025-10-30 11:44:30 - api.dependencies - INFO - Creating GraphBuilder with provider: groq
+2025-10-30 11:44:32 - googlemaps.client - INFO - API queries_quota: 60
+2025-10-30 11:44:38 - root - INFO - Logging system initialized
+2025-10-30 11:44:38 - api.dependencies - INFO - Creating GraphBuilder with provider: groq
+2025-10-30 11:44:39 - googlemaps.client - INFO - API queries_quota: 60
+2025-10-30 11:44:51 - api.dependencies - INFO - Creating GraphBuilder with provider: groq
+2025-10-30 11:44:54 - googlemaps.client - INFO - API queries_quota: 60
+2025-10-30 11:45:01 - api.routes.plans_routes - INFO - Generating plan for user Koushik Vardhan: Plan a 7-day trip to Australia with a budget of USD 10000.0 focusing on family, adventure activities for 4 people
+2025-10-30 11:45:20 - api.routes.plans_routes - INFO - Plan created: ID=9, Thread=user_2_new_plan_1761804901
+2025-10-30 11:45:20 - api.routes.plans_routes - INFO - Generating plan for user Koushik Vardhan: Plan a 7-day trip to Australia with a budget of USD 10000.0 focusing on family, adventure activities for 4 people
+2025-10-30 11:45:28 - api.routes.plans_routes - INFO - Plan created: ID=10, Thread=user_2_new_plan_1761804920
+2025-10-30 11:51:11 - root - INFO - Logging system initialized
+2025-10-30 11:51:11 - api.dependencies - INFO - Creating GraphBuilder with provider: groq
+2025-10-30 11:51:12 - googlemaps.client - INFO - API queries_quota: 60
+2025-10-30 11:51:15 - api.dependencies - INFO - Creating GraphBuilder with provider: groq
+2025-10-30 11:51:17 - googlemaps.client - INFO - API queries_quota: 60
+2025-10-30 11:51:18 - api.routes.plans_routes - INFO - Generating plan for user Koushik Vardhan: Plan a 7-day trip to Australia with a budget of USD 10000.0 focusing on family, adventure activities for 4 people
+2025-10-30 11:51:52 - api.routes.plans_routes - INFO - Generating plan for user Koushik Vardhan: Plan a 5-day trip to Custom Destination focusing on general activities for 5 people
+2025-10-30 11:51:54 - api.routes.plans_routes - INFO - Generating plan for user Koushik Vardhan: Plan a 7-day trip to Australia with a budget of USD 10000.0 focusing on family, adventure activities for 4 people
+2025-10-30 11:57:32 - api.routes.auth_routes_fixed - INFO - User logged in: Koushik Vardhan
+2025-10-30 11:57:34 - api.routes.plans_routes - INFO - Generating plan for user Koushik Vardhan: Plan a 7-day trip to Australia with a budget of USD 10000.0 focusing on family, adventure activities for 4 people
+2025-10-30 11:57:42 - api.routes.plans_routes - INFO - Generating plan for user Koushik Vardhan: Plan a 7-day trip to Australia with a budget of USD 10000.0 focusing on family, adventure activities for 4 people
+2025-10-30 11:57:53 - api.routes.plans_routes - INFO - Generating plan for user Koushik Vardhan: Plan a 7-day trip to Australia with a budget of USD 10000.0 focusing on family, adventure activities for 4 people
+2025-10-30 11:59:47 - api.routes.plans_routes - INFO - Generating plan for user Koushik Vardhan: Plan a 7-day trip to Australia with a budget of USD 10000.0 focusing on family, adventure activities for 4 people
+2025-10-30 12:00:55 - api.routes.plans_routes - INFO - Generating plan for user Koushik Vardhan: Plan a 7-day trip to Australia with a budget of USD 10000.0 focusing on family, adventure activities for 4 people
+2025-10-30 12:01:07 - api.routes.plans_routes - INFO - Generating plan for user Koushik Vardhan: Plan a 7-day trip to Australia with a budget of USD 10000.0 focusing on family, adventure activities for 4 people
+2025-10-30 12:01:23 - api.routes.plans_routes - INFO - Generating plan for user Koushik Vardhan: Plan a 7-day trip to Australia with a budget of USD 10000.0 focusing on family, adventure activities for 4 people
+2025-10-30 12:02:18 - api.routes.plans_routes - INFO - Generating plan for user Koushik Vardhan: Plan a 7-day trip to Australia with a budget of USD 10000.0 focusing on family, adventure activities for 4 people
+2025-10-30 12:02:44 - api.routes.plans_routes - INFO - Generating plan for user Koushik Vardhan: Plan a 7-day trip to Australia with a budget of USD 10000.0 focusing on family, adventure activities for 4 people
+2025-10-30 12:03:22 - root - INFO - Logging system initialized
+2025-10-30 12:03:22 - api.dependencies - INFO - Creating GraphBuilder with provider: groq
+2025-10-30 12:03:25 - googlemaps.client - INFO - API queries_quota: 60
+2025-10-30 12:03:26 - api.routes.auth_routes_fixed - INFO - User logged in: Koushik Vardhan
+2025-10-30 12:03:28 - api.dependencies - INFO - Creating GraphBuilder with provider: groq
+2025-10-30 12:03:28 - api.dependencies - INFO - Creating GraphBuilder with provider: groq
+2025-10-30 12:03:32 - googlemaps.client - INFO - API queries_quota: 60
+2025-10-30 12:03:32 - googlemaps.client - INFO - API queries_quota: 60
+2025-10-30 12:03:32 - api.routes.plans_routes - INFO - Generating plan for user Koushik Vardhan: Plan a 7-day trip to Australia with a budget of USD 10000.0 focusing on family, adventure activities for 4 people
+2025-10-30 12:04:02 - api.routes.plans_routes - INFO - Generating plan for user Koushik Vardhan: Plan a 7-day trip to Australia with a budget of USD 10000.0 focusing on family, adventure activities for 4 people
+2025-10-30 12:04:17 - api.routes.plans_routes - INFO - Generating plan for user Koushik Vardhan: Plan a 7-day trip to Australia with a budget of USD 10000.0 focusing on family, adventure activities for 4 people
+2025-10-30 12:04:30 - api.routes.plans_routes - INFO - Plan and conversation history deleted: ID=23, User=Koushik Vardhan
+2025-10-30 12:04:31 - api.routes.plans_routes - INFO - Generating plan for user Koushik Vardhan: Plan a 7-day trip to Australia with a budget of USD 10000.0 focusing on family, adventure activities for 4 people
+2025-10-30 12:04:52 - api.routes.plans_routes - INFO - Generating plan for user Koushik Vardhan: Plan a 7-day trip to Australia with a budget of USD 10000.0 focusing on family, adventure activities for 4 people
+2025-10-30 12:05:05 - api.routes.plans_routes - INFO - Generating plan for user Koushik Vardhan: Plan a 7-day trip to Australia with a budget of USD 10000.0 focusing on family, adventure activities for 4 people
+2025-10-30 12:05:20 - api.routes.plans_routes - INFO - Generating plan for user Koushik Vardhan: Plan a 7-day trip to Paris with a budget of USD 3000.0 focusing on romantic, budget activities
+2025-10-30 12:05:53 - api.routes.plans_routes - INFO - Generating plan for user Koushik Vardhan: Plan a 7-day trip to Australia with a budget of USD 10000.0 focusing on family, adventure activities for 4 people
+2025-10-30 12:09:00 - api.routes.plans_routes - INFO - Generating plan for user Koushik Vardhan: Plan a 7-day trip to Australia with a budget of USD 10000.0 focusing on family, adventure activities for 4 people
+2025-10-30 12:10:41 - root - INFO - Logging system initialized
+2025-10-30 12:10:41 - api.dependencies - INFO - Creating GraphBuilder with provider: groq
+2025-10-30 12:10:42 - googlemaps.client - INFO - API queries_quota: 60
+2025-10-30 12:11:09 - api.routes.auth_routes_fixed - INFO - User logged in: Koushik Vardhan
+2025-10-30 12:11:11 - api.dependencies - INFO - Creating GraphBuilder with provider: groq
+2025-10-30 12:11:11 - api.dependencies - INFO - Creating GraphBuilder with provider: groq
+2025-10-30 12:11:15 - googlemaps.client - INFO - API queries_quota: 60
+2025-10-30 12:11:15 - googlemaps.client - INFO - API queries_quota: 60
+2025-10-30 12:11:15 - api.routes.plans_routes - INFO - Generating plan for user Koushik Vardhan: Plan a 7-day trip to Australia with a budget of USD 10000.0 focusing on family, adventure activities for 4 people
+2025-10-30 12:11:27 - api.routes.plans_routes - INFO - Generating plan for user Koushik Vardhan: Plan a 7-day trip to Australia with a budget of USD 10000.0 focusing on family, adventure activities for 4 people
+2025-10-30 12:11:39 - api.routes.plans_routes - INFO - Generating plan for user Koushik Vardhan: Plan a 7-day trip to Australia with a budget of USD 10000.0 focusing on family, adventure activities for 4 people
+2025-10-30 12:12:58 - groq._base_client - INFO - Retrying request to /openai/v1/chat/completions in 0.387398 seconds
+2025-10-30 12:13:16 - groq._base_client - INFO - Retrying request to /openai/v1/chat/completions in 0.834048 seconds
+2025-10-30 12:16:42 - api.routes.plans_routes - INFO - Generating plan for user Koushik Vardhan: Plan a 7-day trip to Australia with a budget of USD 10000.0 focusing on family, adventure activities for 4 people
+2025-10-30 12:16:58 - root - INFO - Logging system initialized
+2025-10-30 12:16:59 - api.dependencies - INFO - Creating GraphBuilder with provider: groq
+2025-10-30 12:17:01 - googlemaps.client - INFO - API queries_quota: 60
+2025-10-30 12:17:07 - api.routes.plans_routes - INFO - Plan and conversation history deleted: ID=33, User=Koushik Vardhan
+2025-10-30 12:17:10 - api.routes.plans_routes - INFO - Plan and conversation history deleted: ID=32, User=Koushik Vardhan
+2025-10-30 12:17:13 - api.routes.plans_routes - INFO - Plan and conversation history deleted: ID=31, User=Koushik Vardhan
+2025-10-30 12:17:17 - api.routes.plans_routes - INFO - Plan and conversation history deleted: ID=29, User=Koushik Vardhan
+2025-10-30 12:17:20 - api.routes.plans_routes - INFO - Plan and conversation history deleted: ID=30, User=Koushik Vardhan
+2025-10-30 12:17:25 - api.routes.plans_routes - INFO - Plan and conversation history deleted: ID=26, User=Koushik Vardhan
+2025-10-30 12:17:30 - api.routes.plans_routes - INFO - Plan and conversation history deleted: ID=27, User=Koushik Vardhan
+2025-10-30 12:17:34 - api.routes.plans_routes - INFO - Plan and conversation history deleted: ID=25, User=Koushik Vardhan
+2025-10-30 12:17:38 - api.dependencies - INFO - Creating GraphBuilder with provider: groq
+2025-10-30 12:17:39 - googlemaps.client - INFO - API queries_quota: 60
+2025-10-30 12:17:39 - api.routes.plans_routes - INFO - Generating plan for user Koushik Vardhan: Plan a 7-day trip to Australia with a budget of USD 10000.0 focusing on family, adventure activities for 4 people
+2025-10-30 12:18:32 - root - INFO - Logging system initialized
+2025-10-30 12:18:33 - api.dependencies - INFO - Creating GraphBuilder with provider: groq
+2025-10-30 12:18:34 - googlemaps.client - INFO - API queries_quota: 60
+2025-10-30 12:19:04 - root - INFO - Logging system initialized
+2025-10-30 12:19:04 - api.dependencies - INFO - Creating GraphBuilder with provider: groq
+2025-10-30 12:19:04 - googlemaps.client - INFO - API queries_quota: 60
+2025-10-30 12:19:21 - root - INFO - Logging system initialized
+2025-10-30 12:19:22 - api.dependencies - INFO - Creating GraphBuilder with provider: groq
+2025-10-30 12:19:25 - googlemaps.client - INFO - API queries_quota: 60
+2025-10-30 12:19:26 - api.dependencies - INFO - Creating GraphBuilder with provider: groq
+2025-10-30 12:19:26 - api.dependencies - INFO - Creating GraphBuilder with provider: groq
+2025-10-30 12:19:28 - googlemaps.client - INFO - API queries_quota: 60
+2025-10-30 12:19:28 - api.routes.plans_routes - INFO - Generating plan for user Koushik Vardhan: Plan a 7-day trip to Australia with a budget of USD 10000.0 focusing on family, adventure activities for 4 people
+2025-10-30 12:19:28 - googlemaps.client - INFO - API queries_quota: 60
+2025-10-30 12:19:43 - api.routes.plans_routes - INFO - Plan created: ID=36, Thread=user_2_new_plan_1761806968
+2025-10-30 12:19:43 - api.routes.plans_routes - INFO - Generating plan for user Koushik Vardhan: Plan a 7-day trip to Australia with a budget of USD 10000.0 focusing on family, adventure activities for 4 people
+2025-10-30 12:19:58 - api.routes.plans_routes - INFO - Plan created: ID=37, Thread=user_2_new_plan_1761806983
+2025-10-30 12:20:08 - api.routes.plans_routes - INFO - Plan and conversation history deleted: ID=37, User=Koushik Vardhan
+2025-10-30 12:20:12 - api.routes.plans_routes - INFO - Plan and conversation history deleted: ID=36, User=Koushik Vardhan
+2025-10-30 12:20:15 - api.routes.plans_routes - INFO - Plan and conversation history deleted: ID=35, User=Koushik Vardhan
+2025-10-30 12:20:18 - api.routes.plans_routes - INFO - Plan and conversation history deleted: ID=34, User=Koushik Vardhan
+2025-10-30 12:20:22 - api.routes.plans_routes - INFO - Plan and conversation history deleted: ID=24, User=Koushik Vardhan
+2025-10-30 12:20:25 - api.routes.plans_routes - INFO - Plan and conversation history deleted: ID=28, User=Koushik Vardhan
+2025-10-30 12:20:28 - api.routes.plans_routes - INFO - Plan and conversation history deleted: ID=21, User=Koushik Vardhan
+2025-10-30 12:20:31 - api.routes.plans_routes - INFO - Plan and conversation history deleted: ID=20, User=Koushik Vardhan
+2025-10-30 12:20:35 - api.routes.plans_routes - INFO - Plan and conversation history deleted: ID=19, User=Koushik Vardhan
+2025-10-30 12:20:38 - api.routes.plans_routes - INFO - Plan and conversation history deleted: ID=22, User=Koushik Vardhan
+2025-10-30 12:24:02 - api.routes.auth_routes_fixed - INFO - Google user logged in: another_one
+2025-10-30 12:24:19 - api.routes.plans_routes - INFO - Generating plan for user another_one: Plan a 4-day trip to kedharnath under 5000
+2025-10-30 12:24:25 - api.routes.plans_routes - INFO - Plan created: ID=19, Thread=user_3_new_plan_1761807259
+2025-10-30 12:31:20 - root - INFO - Logging system initialized
+2025-10-30 12:31:20 - api.dependencies - INFO - Creating GraphBuilder with provider: groq
+2025-10-30 12:31:21 - googlemaps.client - INFO - API queries_quota: 60
+2025-10-30 12:31:38 - root - INFO - Logging system initialized
+2025-10-30 12:31:38 - api.dependencies - INFO - Creating GraphBuilder with provider: groq
+2025-10-30 12:31:40 - googlemaps.client - INFO - API queries_quota: 60
+2025-10-30 12:32:12 - root - INFO - Logging system initialized
+2025-10-30 12:32:12 - api.dependencies - INFO - Creating GraphBuilder with provider: groq
+2025-10-30 12:32:13 - googlemaps.client - INFO - API queries_quota: 60
+2025-10-30 12:32:23 - root - INFO - Logging system initialized
+2025-10-30 12:32:23 - api.dependencies - INFO - Creating GraphBuilder with provider: groq
+2025-10-30 12:32:23 - googlemaps.client - INFO - API queries_quota: 60
+2025-10-30 12:32:31 - root - INFO - Logging system initialized
+2025-10-30 12:32:31 - api.dependencies - INFO - Creating GraphBuilder with provider: groq
+2025-10-30 12:32:31 - googlemaps.client - INFO - API queries_quota: 60
+2025-10-30 12:32:49 - root - INFO - Logging system initialized
+2025-10-30 12:32:49 - api.dependencies - INFO - Creating GraphBuilder with provider: groq
+2025-10-30 12:32:50 - googlemaps.client - INFO - API queries_quota: 60
+2025-10-30 12:33:36 - api.dependencies - INFO - Creating GraphBuilder with provider: groq
+2025-10-30 12:33:39 - googlemaps.client - INFO - API queries_quota: 60
+2025-10-30 12:33:39 - api.routes.plans_routes - INFO - Generating plan for user another_one: Plan a 6-day trip to kedharnath for 2 members with around 10000 budget per head for 6 days
+2025-10-30 12:33:46 - api.routes.plans_routes - INFO - Plan created: ID=20, Thread=user_3_new_plan_1761807819
+2025-10-30 12:41:47 - root - INFO - Logging system initialized
+2025-10-30 12:41:47 - api.dependencies - INFO - Creating GraphBuilder with provider: groq
+2025-10-30 12:41:49 - googlemaps.client - INFO - API queries_quota: 60
+2025-10-30 12:42:05 - root - INFO - Logging system initialized
+2025-10-30 12:42:05 - api.dependencies - INFO - Creating GraphBuilder with provider: groq
+2025-10-30 12:42:06 - googlemaps.client - INFO - API queries_quota: 60
+2025-10-30 12:43:39 - root - INFO - Logging system initialized
+2025-10-30 12:43:39 - api.dependencies - INFO - Creating GraphBuilder with provider: groq
+2025-10-30 12:43:40 - googlemaps.client - INFO - API queries_quota: 60
+2025-10-30 12:44:14 - api.dependencies - INFO - Creating GraphBuilder with provider: groq
+2025-10-30 12:44:16 - googlemaps.client - INFO - API queries_quota: 60
+2025-10-30 12:44:56 - root - INFO - Logging system initialized
+2025-10-30 12:44:56 - api.dependencies - INFO - Creating GraphBuilder with provider: groq
+2025-10-30 12:44:57 - googlemaps.client - INFO - API queries_quota: 60
+2025-10-30 12:45:10 - root - INFO - Logging system initialized
+2025-10-30 12:45:10 - api.dependencies - INFO - Creating GraphBuilder with provider: groq
+2025-10-30 12:45:11 - googlemaps.client - INFO - API queries_quota: 60
+2025-10-30 12:45:16 - root - INFO - Logging system initialized
+2025-10-30 12:45:16 - api.dependencies - INFO - Creating GraphBuilder with provider: groq
+2025-10-30 12:45:17 - googlemaps.client - INFO - API queries_quota: 60
+2025-10-30 12:45:30 - root - INFO - Logging system initialized
+2025-10-30 12:45:31 - api.dependencies - INFO - Creating GraphBuilder with provider: groq
+2025-10-30 12:45:31 - googlemaps.client - INFO - API queries_quota: 60
+2025-10-30 12:45:52 - api.dependencies - INFO - Creating GraphBuilder with provider: groq
+2025-10-30 12:45:54 - googlemaps.client - INFO - API queries_quota: 60
+2025-10-30 12:45:54 - api.routes.plans_routes - INFO - Generating plan for user another_one: Plan a 7-day trip to Paris with budget under $5000 with a budget of USD 5000.0
+2025-10-30 12:46:07 - api.routes.plans_routes - INFO - Plan created: ID=21, Thread=user_3_new_plan_1761808554
+2025-10-30 12:56:14 - api.routes.auth_routes_fixed - INFO - Google user logged in: another_one
+2025-10-30 12:58:33 - root - INFO - Logging system initialized
+2025-10-30 12:58:34 - api.dependencies - INFO - Creating GraphBuilder with provider: groq
+2025-10-30 12:58:35 - googlemaps.client - INFO - API queries_quota: 60
+2025-10-30 12:58:42 - root - INFO - Logging system initialized
+2025-10-30 12:58:42 - api.dependencies - INFO - Creating GraphBuilder with provider: groq
+2025-10-30 12:58:43 - googlemaps.client - INFO - API queries_quota: 60
+2025-10-30 12:58:48 - api.dependencies - INFO - Creating GraphBuilder with provider: groq
+2025-10-30 12:58:49 - googlemaps.client - INFO - API queries_quota: 60
+2025-10-30 13:02:32 - root - INFO - Logging system initialized
+2025-10-30 13:02:32 - api.dependencies - INFO - Creating GraphBuilder with provider: groq
+2025-10-30 13:02:33 - googlemaps.client - INFO - API queries_quota: 60
+2025-10-30 13:02:36 - root - INFO - Logging system initialized
+2025-10-30 13:02:36 - api.dependencies - INFO - Creating GraphBuilder with provider: groq
+2025-10-30 13:02:37 - googlemaps.client - INFO - API queries_quota: 60
+2025-10-30 13:02:44 - root - INFO - Logging system initialized
+2025-10-30 13:02:44 - api.dependencies - INFO - Creating GraphBuilder with provider: groq
+2025-10-30 13:02:45 - googlemaps.client - INFO - API queries_quota: 60
+2025-10-30 13:02:50 - root - INFO - Logging system initialized
+2025-10-30 13:02:50 - api.dependencies - INFO - Creating GraphBuilder with provider: groq
+2025-10-30 13:02:50 - googlemaps.client - INFO - API queries_quota: 60
+2025-10-30 13:02:55 - root - INFO - Logging system initialized
+2025-10-30 13:02:55 - api.dependencies - INFO - Creating GraphBuilder with provider: groq
+2025-10-30 13:02:56 - googlemaps.client - INFO - API queries_quota: 60
+2025-10-30 13:03:00 - root - INFO - Logging system initialized
+2025-10-30 13:03:00 - api.dependencies - INFO - Creating GraphBuilder with provider: groq
+2025-10-30 13:03:01 - googlemaps.client - INFO - API queries_quota: 60
+2025-10-30 13:03:04 - root - INFO - Logging system initialized
+2025-10-30 13:03:05 - api.dependencies - INFO - Creating GraphBuilder with provider: groq
+2025-10-30 13:03:05 - googlemaps.client - INFO - API queries_quota: 60
+2025-10-30 13:03:09 - root - INFO - Logging system initialized
+2025-10-30 13:03:09 - api.dependencies - INFO - Creating GraphBuilder with provider: groq
+2025-10-30 13:03:10 - googlemaps.client - INFO - API queries_quota: 60
+2025-10-30 13:03:55 - root - INFO - Logging system initialized
+2025-10-30 13:03:55 - api.dependencies - INFO - Creating GraphBuilder with provider: groq
+2025-10-30 13:03:56 - googlemaps.client - INFO - API queries_quota: 60
+2025-10-30 13:04:01 - root - INFO - Logging system initialized
+2025-10-30 13:04:01 - api.dependencies - INFO - Creating GraphBuilder with provider: groq
+2025-10-30 13:04:02 - googlemaps.client - INFO - API queries_quota: 60
+2025-10-30 13:05:38 - root - INFO - Logging system initialized
+2025-10-30 13:05:38 - api.dependencies - INFO - Creating GraphBuilder with provider: groq
+2025-10-30 13:05:39 - googlemaps.client - INFO - API queries_quota: 60
+2025-10-30 13:06:12 - root - INFO - Logging system initialized
+2025-10-30 13:06:12 - api.dependencies - INFO - Creating GraphBuilder with provider: groq
+2025-10-30 13:06:13 - googlemaps.client - INFO - API queries_quota: 60
+2025-10-30 13:06:20 - root - INFO - Logging system initialized
+2025-10-30 13:06:20 - api.dependencies - INFO - Creating GraphBuilder with provider: groq
+2025-10-30 13:06:22 - googlemaps.client - INFO - API queries_quota: 60
+2025-10-30 13:06:44 - api.dependencies - INFO - Creating GraphBuilder with provider: groq
+2025-10-30 13:06:46 - googlemaps.client - INFO - API queries_quota: 60
+2025-10-30 13:13:33 - root - INFO - Logging system initialized
+2025-10-30 13:13:34 - api.dependencies - INFO - Creating GraphBuilder with provider: groq
+2025-10-30 13:13:35 - googlemaps.client - INFO - API queries_quota: 60
+2025-10-30 13:14:15 - root - INFO - Logging system initialized
+2025-10-30 13:14:15 - api.dependencies - INFO - Creating GraphBuilder with provider: groq
+2025-10-30 13:14:16 - googlemaps.client - INFO - API queries_quota: 60
+2025-10-30 13:14:25 - root - INFO - Logging system initialized
+2025-10-30 13:14:25 - api.dependencies - INFO - Creating GraphBuilder with provider: groq
+2025-10-30 13:14:26 - googlemaps.client - INFO - API queries_quota: 60
+2025-10-30 13:14:42 - main - ERROR - Global exception on http://127.0.0.1:8000/plans/20: Textual SQL expression 'SELECT id, user_id, title...' should be explicitly declared as text('SELECT id, user_id, title...')
+2025-10-30 13:14:42 - main - ERROR - Global exception on http://127.0.0.1:8000/plans/20: Textual SQL expression 'SELECT id, user_id, title...' should be explicitly declared as text('SELECT id, user_id, title...')
+2025-10-30 13:14:42 - main - ERROR - Global exception on http://127.0.0.1:8000/plans/20: Textual SQL expression 'SELECT id, user_id, title...' should be explicitly declared as text('SELECT id, user_id, title...')
+2025-10-30 13:14:44 - main - ERROR - Global exception on http://127.0.0.1:8000/plans/21: Textual SQL expression 'SELECT id, user_id, title...' should be explicitly declared as text('SELECT id, user_id, title...')
+2025-10-30 13:14:46 - main - ERROR - Global exception on http://127.0.0.1:8000/plans/21: Textual SQL expression 'SELECT id, user_id, title...' should be explicitly declared as text('SELECT id, user_id, title...')
+2025-10-30 13:14:48 - main - ERROR - Global exception on http://127.0.0.1:8000/plans/20: Textual SQL expression 'SELECT id, user_id, title...' should be explicitly declared as text('SELECT id, user_id, title...')
+2025-10-30 13:14:51 - main - ERROR - Global exception on http://127.0.0.1:8000/plans/19: Textual SQL expression 'SELECT id, user_id, title...' should be explicitly declared as text('SELECT id, user_id, title...')
+2025-10-30 13:15:14 - root - INFO - Logging system initialized
+2025-10-30 13:15:14 - api.dependencies - INFO - Creating GraphBuilder with provider: groq
+2025-10-30 13:15:15 - googlemaps.client - INFO - API queries_quota: 60
+2025-10-30 13:19:44 - root - INFO - Logging system initialized
+2025-10-30 13:19:44 - api.dependencies - INFO - Creating GraphBuilder with provider: groq
+2025-10-30 13:19:46 - googlemaps.client - INFO - API queries_quota: 60
+2025-10-30 13:20:19 - root - INFO - Logging system initialized
+2025-10-30 13:20:19 - api.dependencies - INFO - Creating GraphBuilder with provider: groq
+2025-10-30 13:20:21 - googlemaps.client - INFO - API queries_quota: 60
+2025-10-30 13:22:07 - api.dependencies - INFO - Creating GraphBuilder with provider: groq
+2025-10-30 13:22:09 - googlemaps.client - INFO - API queries_quota: 60
+2025-10-30 13:28:04 - root - INFO - Logging system initialized
+2025-10-30 13:28:04 - api.dependencies - INFO - Creating GraphBuilder with provider: groq
+2025-10-30 13:28:05 - googlemaps.client - INFO - API queries_quota: 60
+2025-10-30 13:28:31 - api.routes.auth_routes_fixed - INFO - Google user logged in: another_one
+2025-10-30 13:28:42 - api.dependencies - INFO - Creating GraphBuilder with provider: groq
+2025-10-30 13:28:44 - googlemaps.client - INFO - API queries_quota: 60
+2025-10-30 13:29:27 - root - INFO - Logging system initialized
+2025-10-30 13:29:27 - api.dependencies - INFO - Creating GraphBuilder with provider: groq
+2025-10-30 13:29:28 - googlemaps.client - INFO - API queries_quota: 60
+2025-10-30 13:34:32 - root - INFO - Logging system initialized
+2025-10-30 13:34:32 - api.dependencies - INFO - Creating GraphBuilder with provider: groq
+2025-10-30 13:34:33 - googlemaps.client - INFO - API queries_quota: 60
+2025-10-30 13:34:40 - root - INFO - Logging system initialized
+2025-10-30 13:34:40 - api.dependencies - INFO - Creating GraphBuilder with provider: groq
+2025-10-30 13:34:41 - googlemaps.client - INFO - API queries_quota: 60
+2025-10-30 13:34:50 - root - INFO - Logging system initialized
+2025-10-30 13:34:50 - api.dependencies - INFO - Creating GraphBuilder with provider: groq
+2025-10-30 13:34:51 - googlemaps.client - INFO - API queries_quota: 60
+2025-10-30 13:35:01 - root - INFO - Logging system initialized
+2025-10-30 13:35:01 - api.dependencies - INFO - Creating GraphBuilder with provider: groq
+2025-10-30 13:35:03 - googlemaps.client - INFO - API queries_quota: 60
+2025-10-30 13:35:14 - api.dependencies - INFO - Creating GraphBuilder with provider: groq
+2025-10-30 13:35:16 - googlemaps.client - INFO - API queries_quota: 60
+2025-10-30 13:35:44 - root - INFO - Logging system initialized
+2025-10-30 13:35:44 - api.dependencies - INFO - Creating GraphBuilder with provider: groq
+2025-10-30 13:35:45 - googlemaps.client - INFO - API queries_quota: 60
+2025-10-30 13:37:45 - root - INFO - Logging system initialized
+2025-10-30 13:37:45 - api.dependencies - INFO - Creating GraphBuilder with provider: groq
+2025-10-30 13:37:46 - googlemaps.client - INFO - API queries_quota: 60
+2025-10-30 13:38:01 - root - INFO - Logging system initialized
+2025-10-30 13:38:01 - api.dependencies - INFO - Creating GraphBuilder with provider: groq
+2025-10-30 13:38:03 - googlemaps.client - INFO - API queries_quota: 60
+2025-10-30 13:38:03 - api.dependencies - INFO - Creating GraphBuilder with provider: groq
+2025-10-30 13:38:05 - googlemaps.client - INFO - API queries_quota: 60
+2025-10-30 13:41:51 - root - INFO - Logging system initialized
+2025-10-30 13:41:52 - api.dependencies - INFO - Creating GraphBuilder with provider: groq
+2025-10-30 13:41:53 - googlemaps.client - INFO - API queries_quota: 60
+2025-10-30 13:42:19 - api.dependencies - INFO - Creating GraphBuilder with provider: groq
+2025-10-30 13:42:21 - googlemaps.client - INFO - API queries_quota: 60
+2025-10-30 13:43:50 - root - INFO - Logging system initialized
+2025-10-30 13:43:50 - api.dependencies - INFO - Creating GraphBuilder with provider: groq
+2025-10-30 13:43:51 - googlemaps.client - INFO - API queries_quota: 60
+2025-10-30 13:46:02 - root - INFO - Logging system initialized
+2025-10-30 13:46:02 - api.dependencies - INFO - Creating GraphBuilder with provider: groq
+2025-10-30 13:46:03 - googlemaps.client - INFO - API queries_quota: 60
+2025-10-30 13:46:19 - root - INFO - Logging system initialized
+2025-10-30 13:46:19 - api.dependencies - INFO - Creating GraphBuilder with provider: groq
+2025-10-30 13:46:19 - googlemaps.client - INFO - API queries_quota: 60
+2025-10-30 13:48:16 - root - INFO - Logging system initialized
+2025-10-30 13:48:16 - api.dependencies - INFO - Creating GraphBuilder with provider: groq
+2025-10-30 13:48:17 - googlemaps.client - INFO - API queries_quota: 60
+2025-10-30 13:48:42 - root - INFO - Logging system initialized
+2025-10-30 13:48:43 - api.dependencies - INFO - Creating GraphBuilder with provider: groq
+2025-10-30 13:48:45 - googlemaps.client - INFO - API queries_quota: 60
+2025-10-30 13:48:57 - api.dependencies - INFO - Creating GraphBuilder with provider: groq
+2025-10-30 13:48:59 - googlemaps.client - INFO - API queries_quota: 60
+2025-10-30 13:49:14 - root - INFO - Logging system initialized
+2025-10-30 13:49:14 - api.dependencies - INFO - Creating GraphBuilder with provider: groq
+2025-10-30 13:49:14 - googlemaps.client - INFO - API queries_quota: 60
+2025-10-30 13:49:23 - root - INFO - Logging system initialized
+2025-10-30 13:49:23 - api.dependencies - INFO - Creating GraphBuilder with provider: groq
+2025-10-30 13:49:25 - googlemaps.client - INFO - API queries_quota: 60
+2025-10-30 13:49:35 - api.dependencies - INFO - Creating GraphBuilder with provider: groq
+2025-10-30 13:49:37 - googlemaps.client - INFO - API queries_quota: 60
+2025-10-30 13:55:31 - root - INFO - Logging system initialized
+2025-10-30 13:55:31 - api.dependencies - INFO - Creating GraphBuilder with provider: groq
+2025-10-30 13:55:32 - googlemaps.client - INFO - API queries_quota: 60
+2025-10-30 13:55:43 - root - INFO - Logging system initialized
+2025-10-30 13:55:44 - api.dependencies - INFO - Creating GraphBuilder with provider: groq
+2025-10-30 13:55:46 - googlemaps.client - INFO - API queries_quota: 60
+2025-10-30 13:55:56 - api.dependencies - INFO - Creating GraphBuilder with provider: groq
+2025-10-30 13:55:59 - googlemaps.client - INFO - API queries_quota: 60

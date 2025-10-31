@@ -7,6 +7,8 @@ from typing import Optional, List
 from datetime import datetime, timedelta
 from database import models, schemas
 from passlib.context import CryptContext
+import logging
+logger = logging.getLogger(__name__)
 
 # Password hashing
 # Use pbkdf2_sha256 to remove bcrypt's 72-byte input limitation entirely
@@ -164,16 +166,28 @@ def update_conversation_history(
     conversation_history: List[dict],
     thread_id: Optional[str] = None
 ) -> Optional[models.TravelPlan]:
-    """Update conversation history for a travel plan"""
+    """Update conversation history for a travel plan - FIXED VERSION"""
     db_plan = get_travel_plan(db, plan_id, user_id)
     if db_plan:
+        # DEBUG: Check what we're receiving
+        logger.info(f"📥 Received {len(conversation_history)} messages to save")
+        
+        # Save the complete conversation history as provided
         db_plan.conversation_history = conversation_history
         if thread_id:
             db_plan.thread_id = thread_id
+        db_plan.updated_at = datetime.utcnow()
+        
         db.commit()
         db.refresh(db_plan)
-    return db_plan
-
+        
+        # Debug: Verify what was actually saved
+        saved_count = len(db_plan.conversation_history) if db_plan.conversation_history else 0
+        logger.info(f"💾 Successfully saved {saved_count} messages to plan {plan_id}")
+        
+        return db_plan
+    return None
+    
 def get_all_travel_plans_by_destination(
     db: Session,
     destination: str,

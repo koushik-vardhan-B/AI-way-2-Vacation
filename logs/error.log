@@ -1,0 +1,7 @@
+2025-10-30 13:14:42 - main - ERROR - Global exception on http://127.0.0.1:8000/plans/20: Textual SQL expression 'SELECT id, user_id, title...' should be explicitly declared as text('SELECT id, user_id, title...')
+2025-10-30 13:14:42 - main - ERROR - Global exception on http://127.0.0.1:8000/plans/20: Textual SQL expression 'SELECT id, user_id, title...' should be explicitly declared as text('SELECT id, user_id, title...')
+2025-10-30 13:14:42 - main - ERROR - Global exception on http://127.0.0.1:8000/plans/20: Textual SQL expression 'SELECT id, user_id, title...' should be explicitly declared as text('SELECT id, user_id, title...')
+2025-10-30 13:14:44 - main - ERROR - Global exception on http://127.0.0.1:8000/plans/21: Textual SQL expression 'SELECT id, user_id, title...' should be explicitly declared as text('SELECT id, user_id, title...')
+2025-10-30 13:14:46 - main - ERROR - Global exception on http://127.0.0.1:8000/plans/21: Textual SQL expression 'SELECT id, user_id, title...' should be explicitly declared as text('SELECT id, user_id, title...')
+2025-10-30 13:14:48 - main - ERROR - Global exception on http://127.0.0.1:8000/plans/20: Textual SQL expression 'SELECT id, user_id, title...' should be explicitly declared as text('SELECT id, user_id, title...')
+2025-10-30 13:14:51 - main - ERROR - Global exception on http://127.0.0.1:8000/plans/19: Textual SQL expression 'SELECT id, user_id, title...' should be explicitly declared as text('SELECT id, user_id, title...')
