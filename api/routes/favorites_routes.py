@@ -19,7 +19,6 @@ async def add_favorite(
 ):
     """Add destination to favorites"""
     db_favorite = crud.create_favorite(db=db, favorite=favorite, user_id=current_user.id)
-    logger.info(f"Favorite added: {favorite.destination_name} by {current_user.username}")
     return db_favorite
 
 @router.get("/", response_model=List[schemas.FavoriteResponse])
@@ -46,7 +45,6 @@ async def remove_favorite(
             detail="Favorite not found"
         )
     
-    logger.info(f"Favorite deleted: ID={favorite_id}, User={current_user.username}")
     return None
 
 # @router.delete("/by-name/{destination_name}", status_code=status.HTTP_204_NO_CONTENT)
