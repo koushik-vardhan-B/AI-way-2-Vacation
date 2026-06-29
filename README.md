@@ -46,6 +46,7 @@ pip install -r requirements.txt
 
 ### 2. Environment Setup
 ```bash
+
 # Copy environment template
 cp .env.template .env
 
