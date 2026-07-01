@@ -4,6 +4,7 @@ An intelligent travel planning API powered by AI agents that creates comprehensi
 
 ## ✨ Features
 
+
 ### 🎯 Core Travel Planning
 - **AI-Powered Itineraries**: Complete day-by-day travel plans with tourist and offbeat routes
 - **Smart Recommendations**: Hotels, restaurants, attractions, and activities
